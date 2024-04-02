@@ -1,2 +1,2 @@
-# cesi-eats-back
-CESI EATS Back End Repository
+# cesi-eats-front
+CESI EATS Front End Repository
