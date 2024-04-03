@@ -1,10 +1,11 @@
 import './App.css';
+import Authentification from './components/Authentification';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>CESI EATS</h1>
+        <Authentification/>
       </header>
     </div>
   );
