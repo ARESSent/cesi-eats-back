@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
-const CreateAccount = () => {
+const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -9,18 +9,18 @@ const CreateAccount = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(password !== confirmPassword) {
-      alert("Les mots de passe ne correspondent pas !");
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
       return;
     }
-    console.log('Création de compte pour :', email, password);
+    console.log('Account creation for:', email, password);
     navigate('/');
   };
 
-  return 
+  return (
     <div className="signup-container">
       <form onSubmit={handleSubmit}>
-        <h2>Création de compte</h2>
+        <h2>Create Account</h2>
         <div>
           <label>Email</label>
           <input
@@ -31,7 +31,7 @@ const CreateAccount = () => {
           />
         </div>
         <div>
-          <label>Mot de passe</label>
+          <label>Password</label>
           <input
             type="password"
             value={password}
@@ -40,7 +40,7 @@ const CreateAccount = () => {
           />
         </div>
         <div>
-          <label>Confirmez le mot de passe</label>
+          <label>Confirm Password</label>
           <input
             type="password"
             value={confirmPassword}
@@ -48,10 +48,10 @@ const CreateAccount = () => {
             required
           />
         </div>
-        <button type="submit">S'inscrire</button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
-  ;
+  );
 }
 
-export default CreateAccount; 
+export default SignIn;
