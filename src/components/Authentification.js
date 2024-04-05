@@ -1,9 +1,21 @@
-import React from 'react';
+import axios from 'axios';
 
-function Authentification() {
-  return (
+const Authentification = async (email, password) => {
+  try {
+    const response = await axios.post('http://localhost:3001/services/auth/authService', {
+      email,
+      password,
+    });
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token); 
+      return true; 
+    }
+    return false; 
+  } catch (error) {
+    throw error;
+  }
+};
 
-  );
-}
-
-export default Authentification;
+export const AuthService = {
+  Authentification,
+};
