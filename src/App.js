@@ -4,7 +4,6 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import Header from "./components/Header"; 
 import Footer from "./components/Footer";
 import Browse from "./Browse";
 import Cart from "./Cart"; 
@@ -16,7 +15,6 @@ function App() {
   return (
     <>
       <Router>
-        <Header />
         <main>
           <Routes>
               <Route path="/" element={<Browse />} />
