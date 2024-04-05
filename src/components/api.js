@@ -1,28 +1,41 @@
-const BASE_URL = 'https://your-backend-domain.com/api';
+import axios from "axios"
 
-const handleResponse = async (response) => {
-  if (response.ok) {
-    return response.json();
-  }
-  const errorMessage = await response.text();
-  throw new Error(errorMessage);
-};
-
-export const fetchData = async (endpoint, queryParams = {}) => {
-  const url = new URL(`${BASE_URL}/${endpoint}`);
-  Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-  
-  const response = await fetch(url);
-  return handleResponse(response);
-};
-
-export const postData = async (endpoint, data) => {
-  const response = await fetch(`${BASE_URL}/${endpoint}`, {
-    method: 'POST',
+export const request = axios.create({
+    baseURL: "http://localhost/3000",
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+
+
+export const api = {
+    headers: {
+        'Authorization': 'Bearer secret_OcgrinUIbnnczMb6qNEoCBuxs5GF3wjOlCMwyt2ZJZl',
+        'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
-  });
-  return handleResponse(response);
-};
+    getLogin: async (email, password) => {
+
+        let body = {}
+        let params = "?filter[name][_eq]=" + contextName
+        let collection = "context"
+        var config = {
+            method: 'get',
+            url: request.baseURL+collection+params,
+            data: body
+        }
+
+        var validContext
+
+        return await axios(config).then((response) => {
+            if (response.status === 200) {
+                validContext = response.data.data[0]
+                return validContext
+            } else {
+                let err = new Error("Error !!")
+                return err
+            }
+        }).catch((error) => {
+            alert(error)
+        })
+    }
+}
