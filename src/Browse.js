@@ -1,60 +1,71 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { TextField, Grid, List, ListItem } from '@mui/material';
-
-function throttle(func, limit) {
-  let inThrottle;
-  return function() {
-    const args = arguments;
-    const context = this;
-    if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => (inThrottle = false), limit);
-    }
-  };
-}
+import React, { useState, useEffect } from 'react';
+import { TextField, Grid, List, ListItem, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
 const Browse = () => {
   const [searchText, setSearchText] = useState('');
   const [listItems, setListItems] = useState([]);
+  const [category, setCategory] = useState('all');
 
-  const fetchData = async (searchValue) => {
-    if (!searchValue) {
-      setListItems([]);
-      return;
-    }
+  const articles = [
+    { id: 1, name: 'Burger', category: 'food' },
+    { id: 2, name: 'Pizza', category: 'food' },
+    { id: 3, name: 'Coke', category: 'drinks' },
+    { id: 4, name: 'Lemonade', category: 'drinks' },
+    { id: 5, name: 'Cheesecake', category: 'desserts' },
+    { id: 6, name: 'Ice Cream', category: 'desserts' },
+  ];
 
-    try {
-      const response = await fetch(`YOUR_API_URL?query=${encodeURIComponent(searchValue)}`);
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      setListItems(data); 
-    } catch (error) {
-      console.error("Failed to fetch data:", error);
-    }
+  const categories = ['all', 'food', 'drinks', 'desserts'];
+
+  const fetchData = (searchValue = '', selectedCategory = 'all') => {
+    const filteredData = articles.filter(item => {
+      const matchCategory = selectedCategory === 'all' || item.category === selectedCategory;
+      const matchSearch = item.name.toLowerCase().includes(searchValue.toLowerCase());
+      return matchCategory && matchSearch;
+    });
+
+    setListItems(filteredData);
   };
 
-  const throttledFetchData = useCallback(throttle((searchValue) => fetchData(searchValue), 1000), []);
-
   useEffect(() => {
-    throttledFetchData(searchText);
-  }, [searchText, throttledFetchData]);
+    fetchData();
+  }, []);
 
   return (
     <Grid container direction="column" spacing={2}>
+      <Grid item>
+        <FormControl fullWidth>
+          <InputLabel>Category</InputLabel>
+          <Select
+            value={category}
+            label="Category"
+            onChange={(e) => {
+              setCategory(e.target.value);
+              fetchData(searchText, e.target.value);
+            }}
+          >
+            {categories.map((cat) => (
+              <MenuItem key={cat} value={cat}>{cat}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Grid>
       <Grid item>
         <TextField
           fullWidth
           label="Search"
           variant="outlined"
           value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            fetchData(e.target.value, category);
+          }}
         />
       </Grid>
       <Grid item>
         <List>
-          {listItems.map((item, index) => (
-            <ListItem key={index}>{item.name}</ListItem> 
+          {listItems.map((item) => (
+            <ListItem key={item.id}>{item.name}</ListItem>
           ))}
         </List>
       </Grid>

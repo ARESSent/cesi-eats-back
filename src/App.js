@@ -30,7 +30,7 @@ const HeaderDynamic = () => {
     '/signin': 'Create Account',
     '/login': 'Connexion',
     '/about': 'About Cesi Eats',
-    '/orders': 'Orders',
+    '/orders': 'Order History',
     '/wallet': 'Wallet',
     '/settings': 'Privacy Settings',
     '/help': 'Help & Support',
