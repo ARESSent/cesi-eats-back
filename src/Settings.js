@@ -21,11 +21,11 @@ const Settings = () => {
     <Container maxWidth="sm">
       <Box sx={{ padding: 4 }}>
         <FormControlLabel
-          control={<Switch checked={true} />} // Ensure you bind these to state in your actual code
+          control={<Switch checked={true} />}
           label="Allow Data Sharing for Research"
         />
         <FormControlLabel
-          control={<Switch checked={true} />} // Ensure you bind these to state in your actual code
+          control={<Switch checked={true} />} 
           label="Receive Promotional Emails"
         />
         <Box sx={{ marginTop: 2 }}>
