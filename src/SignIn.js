@@ -1,26 +1,45 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import api from './components/api.js';
 
-const SignIn = () => {
+const Signin = () => {
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const navigate = useNavigate();
+  const [passwordConfirm, setConfirmPassword] = useState('');
+  const [birthdate, setBirthdate] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (password !== confirmPassword) {
+    if (password !== passwordConfirm) {
       alert("Passwords do not match!");
       return;
     }
-    console.log('Account creation for:', email, password);
-    navigate('/');
+    api.postSignin(firstname, lastname, email, password, passwordConfirm, birthdate) ;
   };
 
   return (
     <div className="signup-container">
       <form onSubmit={handleSubmit}>
-        <h2>Create Account</h2>
+        <div>
+          <label>First Name</label>
+          <input
+            type="text"
+            value={firstname}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Last Name</label>
+          <input
+            type="text"
+            value={lastname}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </div>
         <div>
           <label>Email</label>
           <input
@@ -43,15 +62,26 @@ const SignIn = () => {
           <label>Confirm Password</label>
           <input
             type="password"
-            value={confirmPassword}
+            value={passwordConfirm}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Sign Up</button>
+        <div>
+          <label>Birthdate</label>
+          <input
+            type="date"
+            value={birthdate}
+            onChange={(e) => setBirthdate(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Sign In</button>
+        <button type="button"><Link to="/login">Log In</Link></button>
+
       </form>
     </div>
   );
 }
 
-export default SignIn;
+export default Signin;

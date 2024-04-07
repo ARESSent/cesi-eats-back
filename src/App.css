@@ -13,5 +13,34 @@ footer a
 
 main
 {
-    height: 884px;
+    height: 810px;
+    overflow-y: scroll;
+}
+
+header .logo
+{
+    height: 50px;
+    border-radius: 4px;
+}
+
+header
+{
+    display: flex;
+    margin-bottom: 8px;
+}
+
+header h1
+{
+    margin: 0px;
+    align-content: center;
+    width: 100%;
+    text-align: center;
+    padding-right: 50px;
+}
+
+.outlinedicon
+{
+    stroke: #000000;
+    stroke-width: 1.2px;
+    fill-opacity: 0;
 }

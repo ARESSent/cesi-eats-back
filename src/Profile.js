@@ -1,35 +1,48 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Grid, Box } from '@mui/material';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BadgeIcon from '@mui/icons-material/Badge';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import HelpIcon from '@mui/icons-material/Help';
+import SettingsIcon from '@mui/icons-material/Settings';
+import InfoIcon from '@mui/icons-material/Info';
 
 const Profile = () => {
+  const logout = () => {
+    localStorage.removeItem('token');
+    window.location.assign("/login");
+  }
+  
   return (
-      <Box height='100%'>
-          <Grid p="40px">
-            Icon Profile ProfileName
-          </Grid>
-        <Grid container flexDirection="column">
-
-          <Grid item p="20px">
-            Icon Orders
-          </Grid>
-
-          <Grid item p="20px">
-            Icon Wallet
-          </Grid>
-
-          <Grid item p="20px">
-            Icon Help
-          </Grid>
-
-          <Grid item p="20px">
-            Icon Parameters
-          </Grid>
+    <Box>
+      <Grid container spacing={2} direction="column" p="40px">
+        <Grid item>
+          <AccountCircleIcon /> ProfileName 
+          <button type="button"><Link to="/login">Log In</Link></button>
+          <button onClick={logout}>Log Out</button> 
         </Grid>
-        <Grid p="20px" display='flex' alignItems='flex-end' height='535px'>
-            about
+        <Grid item> 
+          <BadgeIcon /> <Link to="/account">Account</Link>
         </Grid>
-      </Box>
+        <Grid item> 
+          <ListAltIcon /> <Link to="/orders">Orders</Link>
+        </Grid>
+        <Grid item>
+          <AccountBalanceWalletIcon /> <Link to="/wallet">Wallet</Link>
+        </Grid>
+        <Grid item>
+          <SettingsIcon /> <Link to="/settings">Settings</Link>
+        </Grid>
+        <Grid item>
+          <HelpIcon /> <Link to="/help">Help & Support</Link>
+        </Grid>
+        <Grid item>
+          <InfoIcon /> <Link to="/about">About</Link>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 
