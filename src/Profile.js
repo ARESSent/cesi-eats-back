@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Grid, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Grid, Box, Button, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BadgeIcon from '@mui/icons-material/Badge';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -10,36 +10,82 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 
 const Profile = () => {
+  const navigate = useNavigate();
+
   const logout = () => {
     localStorage.removeItem('token');
-    window.location.assign("/login");
+    navigate("/login");
   }
   
   return (
-    <Box>
-      <Grid container spacing={2} direction="column" p="40px">
-        <Grid item>
-          <AccountCircleIcon /> ProfileName 
-          <button type="button"><Link to="/login">Log In</Link></button>
-          <button onClick={logout}>Log Out</button> 
-        </Grid>
-        <Grid item> 
-          <BadgeIcon /> <Link to="/account">Account</Link>
-        </Grid>
-        <Grid item> 
-          <ListAltIcon /> <Link to="/orders">Orders</Link>
+    <Box sx={{ p: 3 }}>
+      <Grid container spacing={2} direction="column">
+        <Grid item display="flex" justifyContent="center" alignItems="center">
+          <BadgeIcon /> ARESS ENT
         </Grid>
         <Grid item>
-          <AccountBalanceWalletIcon /> <Link to="/wallet">Wallet</Link>
+          <Button
+            startIcon={<AccountCircleIcon />}
+            fullWidth
+            onClick={() => navigate("/account")}
+          >
+            Account
+          </Button>
         </Grid>
         <Grid item>
-          <SettingsIcon /> <Link to="/settings">Settings</Link>
+          <Button
+            startIcon={<ListAltIcon />}
+            fullWidth
+            onClick={() => navigate("/orders")}
+          >
+            Orders
+          </Button>
         </Grid>
         <Grid item>
-          <HelpIcon /> <Link to="/help">Help & Support</Link>
+          <Button
+            startIcon={<AccountBalanceWalletIcon />}
+            fullWidth
+            onClick={() => navigate("/wallet")}
+          >
+            Wallet
+          </Button>
         </Grid>
         <Grid item>
-          <InfoIcon /> <Link to="/about">About</Link>
+          <Button
+            startIcon={<SettingsIcon />}
+            fullWidth
+            onClick={() => navigate("/settings")}
+          >
+            Settings
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            startIcon={<HelpIcon />}
+            fullWidth
+            onClick={() => navigate("/help")}
+          >
+            Help & Support
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            startIcon={<InfoIcon />}
+            fullWidth
+            onClick={() => navigate("/about")}
+          >
+            About
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            color="error"
+            fullWidth
+            onClick={logout}
+          >
+            Log Out
+          </Button>
         </Grid>
       </Grid>
     </Box>

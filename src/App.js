@@ -29,12 +29,12 @@ const HeaderDynamic = () => {
     '/profile': 'Profile',  
     '/signin': 'Create Account',
     '/login': 'Connexion',
-    '/about': 'About',
+    '/about': 'About Cesi Eats',
     '/orders': 'Orders',
     '/wallet': 'Wallet',
-    '/settings': 'Settings',
+    '/settings': 'Privacy Settings',
     '/help': 'Help & Support',
-    '/account': 'Account'
+    '/account': 'Account Information'
   };
   const title = titleMap[location.pathname.toLowerCase()]; 
 

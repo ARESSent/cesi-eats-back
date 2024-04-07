@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from './components/api.js';
+import { Box, TextField, Button, Container } from '@mui/material';
 
 const Signin = () => {
   const [firstname, setFirstName] = useState('');
@@ -18,69 +19,105 @@ const Signin = () => {
     }
     api.postSignin(firstname, lastname, email, password, passwordConfirm, birthdate) ;
   };
-
   return (
-    <div className="signup-container">
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>First Name</label>
-          <input
-            type="text"
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="firstname"
+            label="First Name"
+            name="firstname"
+            autoComplete="given-name"
+            autoFocus
             value={firstname}
             onChange={(e) => setFirstName(e.target.value)}
-            required
           />
-        </div>
-        <div>
-          <label>Last Name</label>
-          <input
-            type="text"
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="lastname"
+            label="Last Name"
+            name="lastname"
+            autoComplete="family-name"
             value={lastname}
             onChange={(e) => setLastName(e.target.value)}
-            required
           />
-        </div>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
             type="password"
+            id="password"
+            autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
-        </div>
-        <div>
-          <label>Confirm Password</label>
-          <input
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="passwordConfirm"
+            label="Confirm Password"
             type="password"
+            id="password-confirm"
             value={passwordConfirm}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
           />
-        </div>
-        <div>
-          <label>Birthdate</label>
-          <input
+          <TextField
+            id="birthdate"
+            label="Birthdate"
             type="date"
+            fullWidth
+            required
+            InputLabelProps={{
+              shrink: true,
+            }}
             value={birthdate}
             onChange={(e) => setBirthdate(e.target.value)}
-            required
           />
-        </div>
-        <button type="submit">Sign In</button>
-        <button type="button"><Link to="/login">Log In</Link></button>
-
-      </form>
-    </div>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+          <Button
+            component={Link}
+            to="/login"
+            fullWidth
+            variant="text"
+          >
+            Already have an account? Log In
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 }
 

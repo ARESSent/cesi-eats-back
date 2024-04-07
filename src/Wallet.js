@@ -16,18 +16,13 @@ const Wallet = () => {
   return (
     <Box sx={{ p: 3, maxWidth: 400, margin: 'auto' }}>
       <Box sx={{ mb: 2 }}>
-        <CreditCardIcon color="primary" sx={{ fontSize: 40 }} />
+        <h2>
+          <CreditCardIcon color="primary" sx={{ fontSize: 40 }} />
+          Credit Card 
+        </h2>
+        
       </Box>
       <form onSubmit={handleSubmit}>
-        <TextField
-          label="Name on card"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          required
-          value={cardName}
-          onChange={(e) => setCardName(e.target.value)}
-        />
         <TextField
           label="Card number"
           variant="outlined"
@@ -36,6 +31,15 @@ const Wallet = () => {
           required
           value={cardNumber}
           onChange={(e) => setCardNumber(e.target.value)}
+        />
+        <TextField
+          label="Name on card"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          required
+          value={cardName}
+          onChange={(e) => setCardName(e.target.value)}
         />
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -68,7 +72,7 @@ const Wallet = () => {
           fullWidth
           sx={{ mt: 3 }}
         >
-          Add Card
+          Update Card
         </Button>
       </form>
     </Box>

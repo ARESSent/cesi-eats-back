@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Box, TextField, Button, Container } from '@mui/material';
 import api from './components/api.js';
 
 const Login = () => {
@@ -7,34 +8,64 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault(); 
-    api.postLogin(email, password);
+    event.preventDefault();
+    api.postLogin(email, password); 
   };
+
   return (
-    <div className="login-container">
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
-        </div>
-        <div className="form-group">
-          <label>Password:</label>
-          <input
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
             type="password"
+            id="password"
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
-        </div>
-        <button type="submit">Log In</button>
-        <button type="button"><Link to="/signin">Create Account</Link></button>
-      </form>
-    </div>  
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Log In
+          </Button>
+          <Button
+            component={Link}
+            to="/signin"
+            fullWidth
+            variant="text"
+          >
+            Don't have an account? Sign Up
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
