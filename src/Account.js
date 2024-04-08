@@ -112,7 +112,6 @@ const Account = () => {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -167,6 +166,7 @@ const Account = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <TextField
+            margin="normal"
             id="birthdate"
             label="Birthdate"
             type="date"
@@ -178,9 +178,9 @@ const Account = () => {
             value={birthdate}
             onChange={(e) => setBirthdate(e.target.value)}
           />
-          <Typography variant="h6">Office Address</Typography>
+          <Typography mt={3} variant="h6">Office Address</Typography>
           {renderAddressFields('Office')}
-          <Typography variant="h6">Home Address</Typography>
+          <Typography mt={3} variant="h6">Home Address</Typography>
           {renderAddressFields('Home')}
           <Button
             type="submit"

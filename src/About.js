@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
@@ -16,9 +17,11 @@ const About = () => {
       <Typography paragraph>
         Thank you for joining us on this adventure. With every order, you're not only supporting Cesi Eats but also the local restaurants and food enthusiasts in our community. Together, let's tantalize taste buds and keep our hearts beating for OM!
       </Typography>
-      <Typography variant="h6" sx={{ mt: 4 }}>
-        Go OM, and enjoy your meal with Cesi Eats!
-      </Typography>
+      <Button variant='text' color='inherit' onClick={() => window.location.href = 'https://billetterie.om.fr/fr'}>
+        <Typography variant="h6"  sx={{ mt: 2 }}>
+          Forza OM, and enjoy your meal with Cesi Eats! 
+        </Typography>
+      </Button>
     </Box>
   );
 };

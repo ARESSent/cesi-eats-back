@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Grid, List, ListItem, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { TextField, Grid, List, ListItem, Select, MenuItem, InputLabel, FormControl, Button, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
+import { useNavigate } from 'react-router-dom';
+
 
 const Browse = () => {
   const [searchText, setSearchText] = useState('');
@@ -27,13 +31,15 @@ const Browse = () => {
     setListItems(filteredData);
   };
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <Grid container direction="column" spacing={2}>
-      <Grid item>
+    <Grid container pt={2} direction="column" spacing={2}>
+      {/* <Grid item>
         <FormControl fullWidth>
           <InputLabel>Category</InputLabel>
           <Select
@@ -49,18 +55,32 @@ const Browse = () => {
             ))}
           </Select>
         </FormControl>
-      </Grid>
+      </Grid> */}
       <Grid item>
         <TextField
           fullWidth
-          label="Search"
+          label="Categories"
           variant="outlined"
           value={searchText}
           onChange={(e) => {
             setSearchText(e.target.value);
             fetchData(e.target.value, category);
           }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            )
+          }}
         />
+      </Grid>
+      <Grid item display='flex' justifyContent='center'>
+        <Button onClick={() => navigate("/restaurants")}>
+          <Typography variant='body1'>
+            Explore Restaurants
+          </Typography>
+        </Button>
       </Grid>
       <Grid item>
         <List>

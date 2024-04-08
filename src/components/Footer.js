@@ -16,17 +16,17 @@ const Footer = () => {
       <Grid container display='flex' flexDirection='row' justifyContent='space-around'>
         <Grid item>
           <Link to="/Browse">
-            {isBrowse ? <RestaurantMenuIcon fontSize='large' /> : <RestaurantMenuIconOutlined fontSize='large' className='outlinedicon' />}
+            {isBrowse ? <RestaurantMenuIcon fontSize='large' htmlColor='#BD905D' /> : <RestaurantMenuIconOutlined fontSize='large' className='outlinedicon' />}
           </Link>
         </Grid>
         <Grid item>
           <Link to="/Cart">
-            {location.pathname === '/Cart' ? <ShoppingBasketIcon fontSize='large' /> : <ShoppingBasketIconOutlined fontSize='large' />}
+            {location.pathname === '/Cart' ? <ShoppingBasketIcon fontSize='large' htmlColor='#BD905D' /> : <ShoppingBasketIconOutlined fontSize='large' className='outlinedicon' />}
           </Link>
         </Grid>
         <Grid item>
           <Link to="/Profile">
-            {location.pathname === '/Profile' ? <AccountCircleIcon fontSize='large' /> : <AccountCircleIconOutlined fontSize='large' />}
+            {location.pathname === '/Profile' ? <AccountCircleIcon fontSize='large' htmlColor='#BD905D' /> : <AccountCircleIconOutlined fontSize='large' className='outlinedicon' />}
           </Link>
         </Grid>
       </Grid>

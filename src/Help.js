@@ -48,7 +48,10 @@ const HelpPage = () => {
       <Typography variant="h6" gutterBottom>
         Guides and Tutorials
       </Typography>
-      <Link href="https://www.cesi.fr/" underline="hover">How to use the app</Link>
+
+      <Typography variant="body2" gutterBottom>
+        <Link href="https://www.cesi.fr/" underline="hover">How to use the app</Link>
+      </Typography>
 
       <Typography variant="h6" gutterBottom>
         Need more help?
@@ -56,10 +59,12 @@ const HelpPage = () => {
       <Typography>
         If you can't find the answer to your question, please feel free to contact us:
       </Typography>
-      <List>
-        <ListItem>Email: support@cesieats.com</ListItem>
-        <ListItem>Phone: +33 1 23 45 67 89</ListItem>
-      </List>
+      <Typography variant='body2'>
+        <List>
+          <ListItem>Email: support@cesieats.com</ListItem>
+          <ListItem>Phone: +33 1 23 45 67 89</ListItem>
+        </List>
+      </Typography>
     </Box>
   );
 }
