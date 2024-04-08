@@ -6,6 +6,27 @@ export const api =
     headers: {
         'Content-Type': 'application/json',
     },
+    postTestToken: async (token) => {
+        let port = "3001";
+        let path = "/verify-token";
+        try {
+          const response = await axios.post(`${api.baseURL}${port}${path}`, { token });
+          if (response.status === 200) {
+            if (!response.data.valid)
+            {
+              localStorage.removeItem('token');
+              window.location.reload();
+            }
+            return "tokenTested"; 
+          }
+          throw new Error('Request failed with status: ' + response.status);
+        } catch (error) {
+          console.error('Error during token verification:', error);
+          localStorage.removeItem('token');
+          window.location.reload();
+          throw error; 
+        }
+      },
     postLogin: async (email, password) => 
     {
         let port = "3001";
@@ -37,7 +58,7 @@ export const api =
             alert(error)
         })
     },
-    postSignin: async (firstname, lastname, email, password, passwordConfirm, birthdate) => 
+    postSignin: async (firstname, lastname, email, password, passwordConfirm, birthdate, userType) => 
     {
         const date = new Date(birthdate);
         const mm = String(date.getMonth() + 1).padStart(2, '0'); 
@@ -54,7 +75,8 @@ export const api =
             password:password, 
             passwordConfirm:passwordConfirm, 
             birthdate:birthdate, 
-            address:{}
+            address:{},
+            userType:userType
         }
         var config = {
             method: 'post',
@@ -78,49 +100,55 @@ export const api =
         }) 
     },
     
-    generateAddressJSON: async (userAdresses) => 
-    {
-        const { Office, Home } = userAdresses.addresses;
+    generateAddressJSON: (userAdresses) => {
+      const { Office, Home } = userAdresses.addresses;
+    
+      const formatAddress = (address) => {
+        if (!address) return null;
         return {
-          Office: {
-            Street: Office.Street,
-            Number: Office.Number,
-            PostalCode: Office.PostalCode,
-            City: Office.City,
-            Country: Office.Country,
-          },
-          Home: {
-            Street: Home.Street,
-            Number: Home.Number,
-            PostalCode: Home.PostalCode,
-            City: Home.City,
-            Country: Home.Country,
-          },
+          Street: address.Street || "N/A", 
+          Number: address.Number || "N/A",
+          PostalCode: address.PostalCode || "N/A",
+          City: address.City || "N/A",
+          Country: address.Country || "N/A",
         };
+      };
+    
+      return {
+        Office: formatAddress(Office),
+        Home: formatAddress(Home),
+      };
     },
-    postUpdateAccourt: async (firstname, lastname, password, passwordConfirm, birthdate, userAdresses) => 
+    putUpdateAccount: async (token, userInfo) => 
     {
-        const date = new Date(birthdate);
+        const date = new Date(userInfo.birthdate);
         const mm = String(date.getMonth() + 1).padStart(2, '0'); 
         const dd = String(date.getDate()).padStart(2, '0');
         const yyyy = date.getFullYear();
-        birthdate = `${mm}/${dd}/${yyyy}`;
-        const addressJSON = api.generateAddressJSON(userAdresses);
+        userInfo.birthdate = `${mm}/${dd}/${yyyy}`;
+
+        const addressJSON = {};
+
+        if (typeof someVariable !== 'undefined') 
+        {
+          addressJSON = api.generateAddressJSON(userInfo.userAdresses);
+        }
 
         let port = "3002";
-        let path= "/user";
+        let path= "/user/"+userInfo.id;
         let body = {
-            firstname:firstname, 
-            lastname:lastname, 
-            password:password, 
-            passwordConfirm:passwordConfirm, 
-            birthdate:birthdate, 
+            firstname:userInfo.firstname, 
+            lastname:userInfo.lastname,  
+            birthdate:userInfo.birthdate, 
             addresses: addressJSON
         }
         var config = {
-            method: 'post',
+            method: 'put',
             url: api.baseURL+port+path,
-            data: body
+            data: body,
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
         }
 
         return await axios(config).then((response) => {
@@ -137,7 +165,35 @@ export const api =
         }).catch((error) => {
             alert(error)
         }) 
+    },
+    getProfile: async (token) => 
+    {
+        let port = "3002";
+        let path = "/user/profile";
+        try {
+          const response = await axios.get(`${api.baseURL}${port}${path}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+    
+          if (response.status === 200) { 
+            return response.data;
+          } else {
+            throw new Error(`Error: Received status code ${response.status}`);
+          }
+        } catch (error) {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+          throw error; 
+        }
     }
-}
-
+};
 export default api;

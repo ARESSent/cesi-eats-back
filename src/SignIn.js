@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from './components/api.js';
-import { Box, TextField, Button, Container } from '@mui/material';
+import { 
+  Box, 
+  TextField, 
+  Button, 
+  Container,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio
+} from '@mui/material';
 
 const Signin = () => {
   const [firstname, setFirstName] = useState('');
@@ -10,6 +20,7 @@ const Signin = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setConfirmPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
+  const [userType, setUserType] = useState('client');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -99,6 +110,21 @@ const Signin = () => {
             value={birthdate}
             onChange={(e) => setBirthdate(e.target.value)}
           />
+
+          <FormControl component="fieldset">
+            <FormLabel component="legend">User Type</FormLabel>
+            <RadioGroup
+              aria-label="user-type"
+              name="userType"
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
+            >
+              <FormControlLabel value="client" control={<Radio />} label="Client" />
+              <FormControlLabel value="delivery" control={<Radio />} label="Delivery" />
+              <FormControlLabel value="restaurant" control={<Radio />} label="Restaurant" />
+            </RadioGroup>
+          </FormControl>
+
           <Button
             type="submit"
             fullWidth
