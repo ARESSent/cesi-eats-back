@@ -28,9 +28,6 @@ const Orders = () => {
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Order History
-        </Typography>
         <List>
           {orderHistory.map((order) => (
             <React.Fragment key={order.id}>
