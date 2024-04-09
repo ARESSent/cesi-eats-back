@@ -9,19 +9,19 @@ const Account = () => {
     lastname: '',
     birthdate: '',
     addresses: {
-      Office: {
-        Home: '',
-        Number: '',
-        PostalCode: '',
-        City: '',
-        Country: ''
+      Home: {
+        Street: 'N/A',
+        Number: 'N/A',
+        PostalCode: 'N/A',
+        City: 'N/A',
+        Country: 'N/A'
       },
       Work: {
-        Street: '',
-        Number: '',
-        PostalCode: '',
-        City: '',
-        Country: ''
+        Street: 'N/A',
+        Number: 'N/A',
+        PostalCode: 'N/A',
+        City: 'N/A',
+        Country: 'N/A'
       }
     }
   });
@@ -36,7 +36,7 @@ const Account = () => {
             setUserInfo(currentState => ({
               ...currentState,
               ...profileData,
-              addresses: profileData.addresses || currentState.addresses 
+              addresses: profileData.address || currentState.addresses 
             }));
           }
         } catch (error) {
@@ -63,7 +63,10 @@ const Account = () => {
         }
       }));
     } else {
-      setUserInfo({ ...userInfo, [name]: value });
+      setUserInfo(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
     }
   };
 
@@ -72,15 +75,15 @@ const Account = () => {
     console.log(userInfo);
     await api.putUpdateAccount(localStorage.getItem('token'), userInfo);
   };
-  const renderAddressFields = (prefix) => (
+  const renderAddressFields = (addressType) => (
     <>
       <TextField
         margin="normal"
         required
         fullWidth
         label="Street"
-        name={`${prefix}.Street`}
-        value={userInfo.addresses[prefix].Street}
+        name={`${addressType}.Street`}
+        value={userInfo.addresses[addressType].Street}
         onChange={handleChange}
       />
       <TextField
@@ -88,8 +91,8 @@ const Account = () => {
         required
         fullWidth
         label="Number"
-        name={`${prefix}.Number`}
-        value={userInfo.addresses[prefix].Number}
+        name={`${addressType}.Number`}
+        value={userInfo.addresses[addressType].Number}
         onChange={handleChange}
       />
       <TextField
@@ -97,8 +100,8 @@ const Account = () => {
         required
         fullWidth
         label="Postal Code"
-        name={`${prefix}.PostalCode`}
-        value={userInfo.addresses[prefix].PostalCode}
+        name={`${addressType}.PostalCode`}
+        value={userInfo.addresses[addressType].PostalCode}
         onChange={handleChange}
       />
       <TextField
@@ -106,8 +109,8 @@ const Account = () => {
         required
         fullWidth
         label="City"
-        name={`${prefix}.City`}
-        value={userInfo.addresses[prefix].City}
+        name={`${addressType}.City`}
+        value={userInfo.addresses[addressType].City}
         onChange={handleChange}
       />
       <TextField
@@ -115,8 +118,8 @@ const Account = () => {
         required
         fullWidth
         label="Country"
-        name={`${prefix}.Country`}
-        value={userInfo.addresses[prefix].Country}
+        name={`${addressType}.Country`}
+        value={userInfo.addresses[addressType].Country}
         onChange={handleChange}
       />
     </>

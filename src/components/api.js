@@ -100,26 +100,6 @@ export const api =
             alert(error)
         }) 
     },
-    
-    generateAddressJSON: (userAdresses) => {
-      const { Work, Home } = userAdresses.addresses;
-    
-      const formatAddress = (address) => {
-        if (!address) return null;
-        return {
-          Street: address.Street || "N/A", 
-          Number: address.Number || "N/A",
-          PostalCode: address.PostalCode || "N/A",
-          City: address.City || "N/A",
-          Country: address.Country || "N/A",
-        };
-      };
-    
-      return {
-        Work: formatAddress(Work),
-        Home: formatAddress(Home),
-      };
-    },
     putUpdateAccount: async (token, userInfo) => 
     {
         const date = new Date(userInfo.birthdate);
@@ -127,23 +107,13 @@ export const api =
         const dd = String(date.getDate()).padStart(2, '0');
         const yyyy = date.getFullYear();
         userInfo.birthdate = `${mm}/${dd}/${yyyy}`;
-
-        console.log(userInfo);
-
-        const addressJSON = {};
-
-        if (typeof someVariable !== 'undefined') 
-        {
-          addressJSON = api.generateAddressJSON(userInfo.userAdresses);
-        }
-
         let port = "3002";
         let path= "/user/"+userInfo.id;
         let body = {
             firstname:userInfo.firstname, 
             lastname:userInfo.lastname,  
             birthdate:userInfo.birthdate, 
-            addresses: addressJSON
+            address: userInfo.addresses
         }
         var config = {
             method: 'put',
