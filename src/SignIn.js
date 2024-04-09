@@ -34,7 +34,6 @@ const Signin = () => {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -99,6 +98,7 @@ const Signin = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <TextField
+            margin="normal"
             id="birthdate"
             label="Birthdate"
             type="date"

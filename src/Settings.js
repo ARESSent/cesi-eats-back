@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Switch, FormControlLabel, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import api from './components/api.js';
+
 
 const Settings = () => {
   const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] = useState(false);
@@ -12,8 +14,28 @@ const Settings = () => {
     setDeleteAccountDialogOpen(false);
   };
 
+  const [userID, setUserId] = useState('');
+
+  useEffect(() => {
+    const fetchProfileInfo = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const profileData = await api.getProfile(token);
+          if (profileData) {
+            setUserId(profileData.id);
+          }
+        } catch (error) {
+          console.error("Error fetching profile information:", error);
+        }
+      }
+    };
+
+    fetchProfileInfo();
+  }, []);
+
   const handleDeleteAccount = () => {
-    // call api delete acount
+    api.deleteUser(localStorage.getItem('token'), userID);
     closeDeleteAccountDialog();
   };
 

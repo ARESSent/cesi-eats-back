@@ -10,13 +10,13 @@ const Account = () => {
     birthdate: '',
     addresses: {
       Office: {
-        Street: '',
+        Home: '',
         Number: '',
         PostalCode: '',
         City: '',
         Country: ''
       },
-      Home: {
+      Work: {
         Street: '',
         Number: '',
         PostalCode: '',
@@ -36,7 +36,7 @@ const Account = () => {
             setUserInfo(currentState => ({
               ...currentState,
               ...profileData,
-              addresses: profileData.addresses || currentState.addresses // Assuming the API returns an 'addresses' object
+              addresses: profileData.addresses || currentState.addresses 
             }));
           }
         } catch (error) {
@@ -171,8 +171,8 @@ const Account = () => {
           />
           <Typography mt={3} variant="h6">Home Address</Typography>
           {renderAddressFields('Home')}
-          <Typography mt={3} variant="h6">Office Address</Typography>
-          {renderAddressFields('Office')}
+          <Typography mt={3} variant="h6">Work Address</Typography>
+          {renderAddressFields('Work')}
           <Button
             type="submit"
             fullWidth

@@ -1,3 +1,4 @@
+import { Delete, Work } from "@mui/icons-material";
 import axios from "axios"
 
 export const api = 
@@ -101,7 +102,7 @@ export const api =
     },
     
     generateAddressJSON: (userAdresses) => {
-      const { Office, Home } = userAdresses.addresses;
+      const { Work, Home } = userAdresses.addresses;
     
       const formatAddress = (address) => {
         if (!address) return null;
@@ -115,7 +116,7 @@ export const api =
       };
     
       return {
-        Office: formatAddress(Office),
+        Work: formatAddress(Work),
         Home: formatAddress(Home),
       };
     },
@@ -126,6 +127,8 @@ export const api =
         const dd = String(date.getDate()).padStart(2, '0');
         const yyyy = date.getFullYear();
         userInfo.birthdate = `${mm}/${dd}/${yyyy}`;
+
+        console.log(userInfo);
 
         const addressJSON = {};
 
@@ -155,6 +158,37 @@ export const api =
             if (response.status === 201) 
             {
                 window.location.assign(api.baseURL+"4000/profile")
+                return "success"
+            } 
+            else 
+            {
+                let err = new Error("Error !!")
+                return err
+            }
+        }).catch((error) => {
+            alert(error)
+        }) 
+    },
+    deleteUser: async (token, id) => 
+    {
+        let port = "3002";
+        let path= "/user/"+id;
+        let body = {
+        }
+        var config = {
+            method: 'delete',
+            url: api.baseURL+port+path,
+            data: body,
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        }
+
+        return await axios(config).then((response) => {
+            if (response.status === 200) 
+            {
+              localStorage.removeItem('token');
+                window.location.assign(api.baseURL+"4000/signin")
                 return "success"
             } 
             else 
