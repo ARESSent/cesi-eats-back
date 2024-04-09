@@ -1,63 +1,77 @@
-import React, { useState } from 'react';
-import { Box, TextField, Button, Container, Typography  } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, TextField, Button, Container, Typography } from '@mui/material';
 import api from './components/api.js';
 
 const Account = () => {
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setConfirmPassword] = useState('');
-  const [birthdate, setBirthdate] = useState('');
-  const [userAdresses, setUserAdresses] = useState({
+  const [userInfo, setUserInfo] = useState({
+    id:'',
+    firstname: '',
+    lastname: '',
+    birthdate: '',
     addresses: {
       Office: {
         Street: '',
         Number: '',
         PostalCode: '',
         City: '',
-        Country: '',
+        Country: ''
       },
       Home: {
         Street: '',
         Number: '',
         PostalCode: '',
         City: '',
-        Country: '',
-      },
-    },
+        Country: ''
+      }
+    }
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (password !== passwordConfirm) {
-      alert("Passwords do not match!");
-      return;
-    }
-    // call api backend
-  };
+  useEffect(() => {
+    const fetchProfileInfo = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const profileData = await api.getProfile(token);
+          if (profileData) {
+            setUserInfo(currentState => ({
+              ...currentState,
+              ...profileData,
+              addresses: profileData.addresses || currentState.addresses // Assuming the API returns an 'addresses' object
+            }));
+          }
+        } catch (error) {
+          console.error("Error fetching profile information:", error);
+        }
+      }
+    };
+
+    fetchProfileInfo();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name.includes('.')) {
-      const [addressKey, fieldKey] = name.split('.');
-      setUserAdresses(prevState => ({
+      const [addressType, field] = name.split('.');
+      setUserInfo(prevState => ({
         ...prevState,
         addresses: {
           ...prevState.addresses,
-          [addressKey]: {
-            ...prevState.addresses[addressKey],
-            [fieldKey]: value,
-          },
-        },
+          [addressType]: {
+            ...prevState.addresses[addressType],
+            [field]: value
+          }
+        }
       }));
     } else {
-      setUserAdresses(prevState => ({
-        ...prevState,
-        [name]: value,
-      }));
+      setUserInfo({ ...userInfo, [name]: value });
     }
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(userInfo);
+    await api.putUpdateAccount(localStorage.getItem('token'), userInfo);
+  };
   const renderAddressFields = (prefix) => (
     <>
       <TextField
@@ -66,7 +80,7 @@ const Account = () => {
         fullWidth
         label="Street"
         name={`${prefix}.Street`}
-        value={userAdresses.addresses[prefix].Street}
+        value={userInfo.addresses[prefix].Street}
         onChange={handleChange}
       />
       <TextField
@@ -75,7 +89,7 @@ const Account = () => {
         fullWidth
         label="Number"
         name={`${prefix}.Number`}
-        value={userAdresses.addresses[prefix].Number}
+        value={userInfo.addresses[prefix].Number}
         onChange={handleChange}
       />
       <TextField
@@ -84,7 +98,7 @@ const Account = () => {
         fullWidth
         label="Postal Code"
         name={`${prefix}.PostalCode`}
-        value={userAdresses.addresses[prefix].PostalCode}
+        value={userInfo.addresses[prefix].PostalCode}
         onChange={handleChange}
       />
       <TextField
@@ -93,7 +107,7 @@ const Account = () => {
         fullWidth
         label="City"
         name={`${prefix}.City`}
-        value={userAdresses.addresses[prefix].City}
+        value={userInfo.addresses[prefix].City}
         onChange={handleChange}
       />
       <TextField
@@ -102,7 +116,7 @@ const Account = () => {
         fullWidth
         label="Country"
         name={`${prefix}.Country`}
-        value={userAdresses.addresses[prefix].Country}
+        value={userInfo.addresses[prefix].Country}
         onChange={handleChange}
       />
     </>
@@ -128,9 +142,9 @@ const Account = () => {
             name="firstname"
             autoComplete="given-name"
             autoFocus
-            value={firstname}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
+            value={userInfo.firstname}
+            onChange={handleChange}
+            />
           <TextField
             margin="normal"
             required
@@ -139,32 +153,9 @@ const Account = () => {
             label="Last Name"
             name="lastname"
             autoComplete="family-name"
-            value={lastname}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="passwordConfirm"
-            label="Confirm Password"
-            type="password"
-            id="password-confirm"
-            value={passwordConfirm}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+            value={userInfo.lastname}
+            onChange={handleChange}
+            />
           <TextField
             margin="normal"
             id="birthdate"
@@ -175,8 +166,8 @@ const Account = () => {
             InputLabelProps={{
               shrink: true,
             }}
-            value={birthdate}
-            onChange={(e) => setBirthdate(e.target.value)}
+            value={userInfo.birthdate}
+            onChange={handleChange}
           />
           <Typography mt={3} variant="h6">Office Address</Typography>
           {renderAddressFields('Office')}

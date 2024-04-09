@@ -6,19 +6,19 @@ import {
   useLocation 
 } from "react-router-dom";
 import "./App.css"
-import Header from "./components/Header"
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Browse from "./Browse";
 import Cart from "./Cart"; 
 import Profile from "./Profile";
-import Signin from "./SignIn";
-import Login from "./LogIn";
-import About from "./About"
-import Orders from "./Orders"
-import Wallet from "./Wallet"
-import Settings from "./Settings"
-import Help from "./Help"
-import Account from "./Account"
+import Signin from "./Signin";
+import Login from "./Login";
+import About from "./About";
+import Orders from "./Orders";
+import Wallet from "./Wallet";
+import Settings from "./Settings";
+import Help from "./Help";
+import Account from "./Account";
 import Restaurants from "./Restaurants"
 
 const HeaderDynamic = () => {
@@ -38,8 +38,7 @@ const HeaderDynamic = () => {
     '/account': 'Profile',
     '/restaurants': 'Restaurants'
   };
-  const title = titleMap[location.pathname.toLowerCase()]; 
-
+  const title = titleMap[location.pathname.toLowerCase()];
   return <Header title={title} />;
 };
 

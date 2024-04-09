@@ -1,5 +1,6 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import api from './components/api.js';
 import { Grid, Box, Button, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BadgeIcon from '@mui/icons-material/Badge';
@@ -12,101 +13,76 @@ import InfoIcon from '@mui/icons-material/Info';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [profileInfo, setProfileInfo] = useState(null);
 
   const logout = () => {
     localStorage.removeItem('token');
+    setIsLoggedIn(false);
     navigate("/login");
-  }
+  };
+
+  useEffect(() => {
+    const verifyAndFetchProfile = async () => {
+      const token = localStorage.getItem('token');
+      if (token) 
+      {
+        try {
+          await api.postTestToken(token);
+          const profileInfo = await api.getProfile(token);
+          setProfileInfo(profileInfo);
+        } catch (error) {
+          console.error("Error during token verification or fetching profile:", error);
+        }
+      } 
+    };
+
+    verifyAndFetchProfile();
+  }, [])
   
   return (
     <Box pt={3} display='flex' justifyContent='center'>
       <Grid container spacing={3} display='block' width='370px'>
-        <Grid item display='flex' pb={3} alignItems='center' borderBottom='1px solid darkGrey'>
-          <BadgeIcon alignItems='center' fontSize='large' htmlColor='#BD905D'/> 
-          <Typography variant="h6" pl={1} color='#BD905D'>
-            ARESS ENT
-          </Typography>
-        </Grid>
-        <Grid item display='flex' pb={3} alignItems='center' borderBottom='1px solid darkGrey'>
-          <AccountCircleIcon alignItems='center' fontSize='large' htmlColor='#1976D2'/>
-          <Button
-            onClick={() => navigate("/account")}
-            style={{ paddingBottom: '3px' }}
-          >
-            <Typography variant="h6">
-              Profile
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item display='flex' pb={3} alignItems='center' borderBottom='1px solid darkGrey'>
-          <ListAltIcon alignItems='center' fontSize='large' htmlColor='#1976D2'/>
-          <Button
-            onClick={() => navigate("/orders")}
-            style={{ paddingBottom: '3px' }}
-          >
-            <Typography variant="h6">
-              Order
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item display='flex' pb={3} alignItems='center' borderBottom='1px solid darkGrey'>
-          <AccountBalanceWalletIcon alignItems='center' fontSize='large' htmlColor='#1976D2'/>
-          <Button
-            onClick={() => navigate("/wallet")}
-            style={{ paddingBottom: '3px' }}
-          >
-            <Typography variant="h6">
-              Wallet
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item display='flex' pb={3} alignItems='center' borderBottom='1px solid darkGrey'>
-          <SettingsIcon alignItems='center' fontSize='large' htmlColor='#1976D2'/>
-          <Button
-            onClick={() => navigate("/settings")}
-            style={{ paddingBottom: '3px' }}
-          >
-            <Typography variant="h6">
-              Settings
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item display='flex' pb={3} alignItems='center' borderBottom='1px solid darkGrey'>
-          <HelpIcon alignItems='center' fontSize='large' htmlColor='#1976D2'/>
-          <Button
-            onClick={() => navigate("/help")}
-            style={{ paddingBottom: '3px' }}
-          >
-            <Typography variant="h6">
-              Help & Support
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item display='flex' pb={3} alignItems='center' borderBottom='1px solid darkGrey'>
-          <InfoIcon alignItems='center' fontSize='large' htmlColor='#1976D2'/>
-          <Button
-            onClick={() => navigate("/about")}
-            style={{ paddingBottom: '3px' }}
-          >
-            <Typography variant="h6">
-              About
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item pt={5} display='flex' alignItems='center'>
-          <Button
-            variant="outlined"
-            color="error"
-            onClick={logout}
-          >
-            <Typography variant="h6">
-              Log Out
-            </Typography>
-          </Button>
-        </Grid>
+      {isLoggedIn && profileInfo ? (
+            <Grid item display="flex" justifyContent="center" alignItems="center">
+              <Typography variant="h6"><BadgeIcon /> {profileInfo.firstname} {profileInfo.lastname}</Typography>
+            </Grid>
+        )  : (<></>)}
+        {!isLoggedIn ? (    
+            <Grid item display="flex" justifyContent="center">
+              <Button variant="contained" onClick={() => navigate("/signin")}>Sign In</Button>
+              <Button variant="contained" onClick={() => navigate("/login")} sx={{ ml: 2 }}>Log In</Button>
+            </Grid>
+        ) : (<></>)}
+          <>
+            <Grid item>
+              <Button startIcon={<AccountCircleIcon />} fullWidth onClick={() => navigate("/account")}>Account</Button>
+            </Grid>
+            <Grid item>
+              <Button startIcon={<ListAltIcon />} fullWidth onClick={() => navigate("/orders")}>Orders</Button>
+            </Grid>
+            <Grid item>
+              <Button startIcon={<AccountBalanceWalletIcon />} fullWidth onClick={() => navigate("/wallet")}>Wallet</Button>
+            </Grid>
+            <Grid item>
+              <Button startIcon={<SettingsIcon />} fullWidth onClick={() => navigate("/settings")}>Settings</Button>
+            </Grid>
+            <Grid item>
+              <Button startIcon={<HelpIcon />} fullWidth onClick={() => navigate("/help")}>Help & Support</Button>
+            </Grid>
+            <Grid item>
+              <Button startIcon={<InfoIcon />} fullWidth onClick={() => navigate("/about")}>About</Button>
+            </Grid>
+            {isLoggedIn ? (
+              <Grid item>
+                <Button variant="outlined" color="error" fullWidth onClick={logout}>Log Out</Button>
+              </Grid>
+            ): (<></>)}
+          </>
+        
       </Grid>
     </Box>
   );
-}
+};
 
 export default Profile;
