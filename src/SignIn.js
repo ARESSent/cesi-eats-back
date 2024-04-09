@@ -20,7 +20,7 @@ const Signin = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setConfirmPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  const [userType, setUserType] = useState('client');
+  const [userType, setUserType] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,7 +28,7 @@ const Signin = () => {
       alert("Passwords do not match!");
       return;
     }
-    api.postSignin(firstname, lastname, email, password, passwordConfirm, birthdate) ;
+    api.postSignin(firstname, lastname, email, password, passwordConfirm, birthdate, userType) ;
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -119,7 +119,7 @@ const Signin = () => {
               value={userType}
               onChange={(e) => setUserType(e.target.value)}
             >
-              <FormControlLabel value="client" control={<Radio />} label="Client" />
+              <FormControlLabel value="customer" control={<Radio />} label="Customer" />
               <FormControlLabel value="delivery" control={<Radio />} label="Delivery" />
               <FormControlLabel value="restaurant" control={<Radio />} label="Restaurant" />
             </RadioGroup>

@@ -1,4 +1,4 @@
-import { Delete, Work } from "@mui/icons-material";
+import { AdbRounded, Delete, Work } from "@mui/icons-material";
 import axios from "axios"
 
 export const api = 
@@ -66,6 +66,12 @@ export const api =
         const dd = String(date.getDate()).padStart(2, '0');
         const yyyy = date.getFullYear();
         birthdate = `${mm}/${dd}/${yyyy}`;
+        const address = {
+          "Home":
+          {"Street":"N/A","Number":"N/A","PostalCode":"N/A","City":"N/A","Country":"N/A"},
+          "Work":
+          {"Street":"N/A","Number":"N/A","PostalCode":"N/A","City":"N/A","Country":"N/A"}
+        }
 
         let port = "3001";
         let path= "/auth/register";
@@ -76,7 +82,7 @@ export const api =
             password:password, 
             passwordConfirm:passwordConfirm, 
             birthdate:birthdate, 
-            address:{},
+            address:address,
             userType:userType
         }
         var config = {
