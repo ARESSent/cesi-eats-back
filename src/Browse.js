@@ -14,6 +14,8 @@ import categoryJapanesse from './images/categories/categoryJapanesse.png'
 import categoryJuiceAndSmoothies from './images/categories/categoryJuiceAndSmoothies.png'
 import categoryPastis from './images/categories/categoryPastis.png'
 import categoryPizza from './images/categories/categoryPizza.png'
+import categoryPaella from './images/categories/categoryPaella.png'
+import categoryProvencal from './images/categories/categoryProvencal.png'
 
 
 const Browse = () => {
