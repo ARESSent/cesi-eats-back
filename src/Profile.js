@@ -10,6 +10,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 
+
 const Profile = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
@@ -40,8 +41,8 @@ const Profile = () => {
   }, [])
   
   return (
-    <Box sx={{ p: 3 }}>
-      <Grid container spacing={2} direction="column">
+    <Box pt={3} display='flex' justifyContent='center'>
+      <Grid container spacing={3} display='block' width='370px'>
       {isLoggedIn && profileInfo ? (
             <Grid item display="flex" justifyContent="center" alignItems="center">
               <Typography variant="h6"><BadgeIcon /> {profileInfo.firstname} {profileInfo.lastname}</Typography>

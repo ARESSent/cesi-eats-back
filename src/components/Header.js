@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {Typography  } from '@mui/material';
 import logo from '../images/cesi_eats_BLUEBG.png';
 
 const Header = ({ title }) => {
@@ -11,7 +12,7 @@ const Header = ({ title }) => {
     return (
         <header>
             <img src={logo} alt="CESI EATS" className="logo" onClick={handleClickLogo} /> 
-            <h1>{title}</h1>
+            <Typography ml={2} display='flex' alignItems='center' variant='h4'>{title}</Typography>
         </header>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Grid } from '@mui/material';
+import { Box, TextField, Button, Grid, Typography } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 const Wallet = () => {
@@ -15,11 +15,10 @@ const Wallet = () => {
 
   return (
     <Box sx={{ p: 3, maxWidth: 400, margin: 'auto' }}>
-      <Box sx={{ mb: 2 }}>
-        <h2>
-          <CreditCardIcon color="primary" sx={{ fontSize: 40 }} />
-          Credit Card 
-        </h2>
+      <Box display='flex' flexDirection='row' >
+        
+          <CreditCardIcon color="primary" sx={{ fontSize: 40 }} display='flex' alignItems='center' />
+          <Typography ml={2} display='flex' alignItems='center' variant='h5'>Credit Card</Typography>
         
       </Box>
       <form onSubmit={handleSubmit}>

@@ -19,6 +19,7 @@ import Wallet from "./Wallet";
 import Settings from "./Settings";
 import Help from "./Help";
 import Account from "./Account";
+import Restaurants from "./Restaurants"
 
 const HeaderDynamic = () => {
   const location = useLocation(); 
@@ -26,7 +27,7 @@ const HeaderDynamic = () => {
     '/': 'Cesi Eats',
     '/browse': 'Cesi Eats',
     '/cart': 'Cart',
-    '/profile': 'Profile',  
+    '/profile': 'Account Informations',  
     '/signin': 'Create Account',
     '/login': 'Connexion',
     '/about': 'About Cesi Eats',
@@ -34,7 +35,8 @@ const HeaderDynamic = () => {
     '/wallet': 'Wallet',
     '/settings': 'Privacy Settings',
     '/help': 'Help & Support',
-    '/account': 'Account Information'
+    '/account': 'Profile',
+    '/restaurants': 'Restaurants'
   };
   const title = titleMap[location.pathname.toLowerCase()];
   return <Header title={title} />;
@@ -58,6 +60,7 @@ function App() {
               <Route path="/Settings" element={<Settings />} />
               <Route path="/Help" element={<Help />} />
               <Route path="/Account" element={<Account />} />
+              <Route path="/Restaurants" element={<Restaurants />} />
           </Routes>
         </main>
         <Footer />
