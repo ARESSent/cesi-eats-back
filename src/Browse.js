@@ -114,7 +114,7 @@ const Browse = () => {
         },
       }}>
         {listItems.map((item, index) => (
-          index % 2 === 1 && (
+          index % 2 === 0 && (
             <List 
               key={item.id}
               sx={{
@@ -175,7 +175,7 @@ const Browse = () => {
         },
       }}>
         {listItems.map((item, index) => (
-          index % 2 === 0 && (
+          index % 2 === 1 && (
             <List 
               key={item.id}
               sx={{
