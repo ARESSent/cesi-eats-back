@@ -24,8 +24,8 @@ import Restaurants from "./Restaurants"
 const HeaderDynamic = () => {
   const location = useLocation(); 
   const titleMap = { // path in lowercase
-    '/': 'Cesi Eats',
-    '/browse': 'Cesi Eats',
+    '/': 'Browse',
+    '/browse': 'Browse',
     '/cart': 'Cart',
     '/profile': 'Account Informations',  
     '/signin': 'Create Account',

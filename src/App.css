@@ -25,6 +25,7 @@ header .logo
 
 header
 {
+    background-color: #065272;
     display: flex;
     margin-bottom: 8px;
 }
@@ -36,6 +37,11 @@ header h1
     width: 100%;
     text-align: center;
     padding-right: 50px;
+}
+
+header h4
+{
+    color: white;
 }
 
 .outlinedicon

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Grid, List, ListItem, Select, MenuItem, InputLabel, FormControl, Button, Typography } from '@mui/material';
+import { TextField, Grid, List, Box, ListItem, Select, MenuItem, InputLabel, FormControl, Button, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useNavigate } from 'react-router-dom';
@@ -14,61 +14,32 @@ import categoryJapanesse from './images/categories/categoryJapanesse.png'
 import categoryJuiceAndSmoothies from './images/categories/categoryJuiceAndSmoothies.png'
 import categoryPastis from './images/categories/categoryPastis.png'
 import categoryPizza from './images/categories/categoryPizza.png'
-import categoryPaella from './images/categories/categoryPaella.png'
+import categorySpanish from './images/categories/categorySpanish.png'
 import categoryProvencal from './images/categories/categoryProvencal.png'
+import categoryOriental from './images/categories/categoryOriental.png'
 
 
 const Browse = () => {
-  const containerStyle = {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr', // Deux colonnes égales pour deux catégories par ligne
-    gap: '10px', // Espace entre les éléments
-    maxWidth: '430px',
-    margin: '0 auto', // Centrer la grille dans la page
-  };
-
-  const itemStyle = {
-    display: 'flex',
-    flexDirection: 'column', // La direction de la colonne pour que le texte vienne après l'image
-    alignItems: 'center', // Centrer le contenu horizontalement
-    justifyContent: 'center', // Centrer le contenu verticalement
-    borderRadius: '10px', // Bords arrondis
-    overflow: 'hidden', // Empêcher le débordement du contenu
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Ombre portée pour un effet de profondeur
-  };
-
-  const imageStyle = {
-    width: '100%', // Largeur complète du conteneur
-    height: 'auto', // Hauteur auto pour maintenir le ratio
-    display: 'block', // Éviter l'espace supplémentaire sous l'image
-  };
-
-  const textStyle = {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond semi-transparent pour le texte
-    color: 'white', // Texte en blanc pour contraster avec le fond sombre
-    width: '100%', // Largeur complète du conteneur
-    textAlign: 'center', // Centrer le texte
-    padding: '8px 0', // Padding vertical pour l'espacement
-    position: 'absolute', // Positionner sur l'image
-    bottom: '0', // Au bas de l'image
-  };
 
   const [searchText, setSearchText] = useState('');
   const [listItems, setListItems] = useState([]);
   const [category, setCategory] = useState('all');
 
   const categories = [
-    {id: 1, name: 'all', pictures: categoryAll},
-    {id: 2, name: 'alcool', pictures: categoryAlcool},
-    {id: 3, name: 'asian', pictures: categoryAsian},
-    {id: 4, name: 'Breakfast', pictures: categoryBreakfastAndBrunch},
-    {id: 5, name: 'bubbletea', pictures: categoryBubbleTea},
-    {id: 6, name: 'burger', pictures: categoryBurger},
-    {id: 7, name: 'pizza', pictures: categoryPizza},
-    {id: 8, name: 'coffeeAndTea', pictures: categoryCoffeeAndTea},
-    {id: 9, name: 'japanesse', pictures: categoryJapanesse},
-    {id: 10, name: 'pastis', pictures: categoryPastis},
-    {id: 11, name: 'juiceAndSmoothies', pictures: categoryJuiceAndSmoothies}
+    {id: 1, name: 'All', pictures: categoryAll},
+    {id: 2, name: 'Alcohol', pictures: categoryAlcool},
+    {id: 3, name: 'Asian', pictures: categoryAsian},
+    {id: 4, name: 'Breakfast And Brunch', pictures: categoryBreakfastAndBrunch},
+    {id: 5, name: 'BubbleTea', pictures: categoryBubbleTea},
+    {id: 6, name: 'Burger', pictures: categoryBurger},
+    {id: 7, name: 'Pizza', pictures: categoryPizza},
+    {id: 8, name: 'Coffee And Tea', pictures: categoryCoffeeAndTea},
+    {id: 9, name: 'Japanese', pictures: categoryJapanesse},
+    {id: 10, name: 'Pastis', pictures: categoryPastis},
+    {id: 11, name: 'Juice And Smoothies', pictures: categoryJuiceAndSmoothies},
+    {id: 12, name: 'Spanish', pictures: categorySpanish},
+    {id: 13, name: 'Provençal', pictures: categoryProvencal},
+    {id: 14, name: 'Oriental', pictures: categoryOriental}
   ];
 
   const fetchData = (searchValue = '', selectedCategory = 'all') => {
@@ -132,14 +103,129 @@ const Browse = () => {
           </Typography>
         </Button>
       </Grid>
-      <div style={containerStyle}>
-      {listItems.map((item) => (
-        <div key={item.id} style={itemStyle}>
-          <img src={item.pictures} alt={item.name} style={imageStyle}/>
-          <div style={textStyle}>{item.name}</div>
-        </div>
-      ))}
-    </div>
+      <Box display='flex' flexDirection='row' width='430px' >
+      <Box paddingLeft={1} sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        '& > :not(style)': {
+          m: 1,
+          width: '195px',
+          height: '100px',
+        },
+      }}>
+        {listItems.map((item, index) => (
+          index % 2 === 1 && (
+            <List 
+              key={item.id}
+              sx={{
+                height: '100px',
+                width: '195px',
+                borderRadius: '12px',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                overflow: 'hidden',
+                boxShadow: 3,
+                position: 'relative',
+                '&:hover': {
+                  boxShadow: 6,
+                },
+              }}
+            >
+            <img 
+              src={item.pictures} 
+              alt={item.name} 
+              sx={{
+                width: "100%",
+                height: 'auto',
+                display: 'block',
+                borderRadius: '10px',
+                transition: 'transform 0.5s ease',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                }
+              }}
+            />
+            <Typography
+              component="div"
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                bgcolor: 'rgba(0, 0, 0, 0.5)',
+                color: 'white',
+                textAlign: 'center',
+              }}
+            >
+              {item.name}
+            </Typography>
+          </List>
+          )
+        ))}
+        
+      </Box>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        '& > :not(style)': {
+          m: 1,
+          width: '195px',
+          height: '100px',
+        },
+      }}>
+        {listItems.map((item, index) => (
+          index % 2 === 0 && (
+            <List 
+              key={item.id}
+              sx={{
+                height: '100px',
+                width: '195px',
+                borderRadius: '12px',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                overflow: 'hidden',
+                boxShadow: 3,
+                position: 'relative',
+                '&:hover': {
+                  boxShadow: 6,
+                },
+              }}
+            >
+            <img 
+              src={item.pictures} 
+              alt={item.name} 
+              sx={{
+                width: "100%",
+                height: 'auto',
+                display: 'block',
+                borderRadius: '10px',
+                transition: 'transform 0.5s ease',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                }
+              }}
+            />
+            <Typography
+              component="div"
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                bgcolor: 'rgba(0, 0, 0, 0.5)',
+                color: 'white',
+                textAlign: 'center',
+              }}
+            >
+              {item.name}
+            </Typography>
+          </List>
+          )
+        ))}
+      </Box>
+      </Box>
 
     </Grid>
   );

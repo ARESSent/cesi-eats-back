@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Typography  } from '@mui/material';
-import logo from '../images/cesi_eats_BLUEBG.png';
+import logo from '../images/cesi_eats.png';
 
 const Header = ({ title }) => {
     const navigate = useNavigate();
