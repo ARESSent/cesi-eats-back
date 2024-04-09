@@ -5,6 +5,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 
 const Restaurants = () => {
+  const [isFocused, setIsFocused] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [listItems, setListItems] = useState([]);
   const [restaurant, setRestaurant] = useState('all');
@@ -31,12 +32,28 @@ const Restaurants = () => {
             setSearchText(e.target.value);
             fetchData(e.target.value, restaurant);
           }}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon style={{ color: isFocused ? '#BD905D' : 'inherit' }} />
               </InputAdornment>
-            )
+            ),
+          }}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '50px',
+              '&.Mui-focused fieldset': {
+                borderColor: '#BD905D',
+              },
+            },
+            '& label.Mui-focused': {
+              color: '#BD905D',
+            },
+            '& label:hover': {
+              color: 'rgba(0, 0, 0, 0.54)',
+            },
           }}
         />
       </Grid>

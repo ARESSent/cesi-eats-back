@@ -58,6 +58,8 @@ const Browse = () => {
     fetchData();
   }, []);
 
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <Grid container pt={2} direction="column" spacing={2}>
       {/* <Grid item>
@@ -87,12 +89,28 @@ const Browse = () => {
             setSearchText(e.target.value);
             fetchData(e.target.value, category);
           }}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon style={{ color: isFocused ? '#BD905D' : 'inherit' }} />
               </InputAdornment>
-            )
+            ),
+          }}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '50px',
+              '&.Mui-focused fieldset': {
+                borderColor: '#BD905D',
+              },
+            },
+            '& label.Mui-focused': {
+              color: '#BD905D',
+            },
+            '& label:hover': {
+              color: 'rgba(0, 0, 0, 0.54)',
+            },
           }}
         />
       </Grid>
