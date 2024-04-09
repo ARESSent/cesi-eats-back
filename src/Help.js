@@ -45,12 +45,16 @@ const HelpPage = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" pt={2} gutterBottom>
         Guides and Tutorials
       </Typography>
 
       <Typography variant="body2" gutterBottom>
-        <Link href="https://www.cesi.fr/" underline="hover">How to use the app</Link>
+        <Link href="https://www.cesi.fr/" underline="hover">
+          <Typography variant="body1" gutterBottom>
+            How to use the app
+          </Typography>
+        </Link>
       </Typography>
 
       <Typography variant="h6" gutterBottom>

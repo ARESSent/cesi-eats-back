@@ -169,10 +169,10 @@ const Account = () => {
             value={userInfo.birthdate}
             onChange={handleChange}
           />
-          <Typography mt={3} variant="h6">Office Address</Typography>
-          {renderAddressFields('Office')}
           <Typography mt={3} variant="h6">Home Address</Typography>
           {renderAddressFields('Home')}
+          <Typography mt={3} variant="h6">Office Address</Typography>
+          {renderAddressFields('Office')}
           <Button
             type="submit"
             fullWidth

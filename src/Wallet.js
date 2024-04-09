@@ -17,8 +17,8 @@ const Wallet = () => {
     <Box sx={{ p: 3, maxWidth: 400, margin: 'auto' }}>
       <Box display='flex' flexDirection='row' >
         
-          <CreditCardIcon color="primary" sx={{ fontSize: 40 }} display='flex' alignItems='center' />
-          <Typography ml={2} display='flex' alignItems='center' variant='h5'>Credit Card</Typography>
+          <CreditCardIcon color="primary" sx={{ fontSize: 40 }} display='flex' />
+          <Typography ml={2} display='flex' variant='h5'>Credit Card</Typography>
         
       </Box>
       <form onSubmit={handleSubmit}>

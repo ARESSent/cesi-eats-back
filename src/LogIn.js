@@ -63,6 +63,13 @@ const Login = () => {
           >
             Don't have an account? Sign Up
           </Button>
+          <Button
+            fullWidth
+            variant="text"
+            href='https://yopmail.com/fr/'
+          >
+            Forgot your password ?
+          </Button>
         </Box>
       </Box>
     </Container>
