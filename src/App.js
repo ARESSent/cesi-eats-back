@@ -19,7 +19,8 @@ import Wallet from "./Wallet";
 import Settings from "./Settings";
 import Help from "./Help";
 import Account from "./Account";
-import Restaurants from "./Restaurants"
+import Restaurants from "./Restaurants";
+import Checkout from "./Checkout";
 
 const HeaderDynamic = () => {
   const location = useLocation(); 
@@ -36,7 +37,8 @@ const HeaderDynamic = () => {
     '/settings': 'Privacy Settings',
     '/help': 'Help & Support',
     '/account': 'Profile',
-    '/restaurants': 'Restaurants'
+    '/restaurants': 'Restaurants',
+    '/checkout': 'Checkout'
   };
   const title = titleMap[location.pathname.toLowerCase()];
   return <Header title={title} />;
@@ -61,6 +63,7 @@ function App() {
               <Route path="/Help" element={<Help />} />
               <Route path="/Account" element={<Account />} />
               <Route path="/Restaurants" element={<Restaurants />} />
+              <Route path="/Checkout" element={<Checkout />} />
           </Routes>
         </main>
         <Footer />
