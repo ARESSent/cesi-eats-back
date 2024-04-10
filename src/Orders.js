@@ -1,35 +1,70 @@
 import React, { useState } from 'react';
-import { Box, Container, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
+import {
+  Box,
+  Container,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Chip
+} from '@mui/material';
 
-const OrderHistoryData = [
-  {
-    id: 1,
-    date: '2023-04-01',
-    items: ['Classic Burger', 'Fries'],
-    total: '$12.99',
-  },
-  {
-    id: 2,
-    date: '2023-03-28',
-    items: ['Spanish Burger', 'Coke'],
-    total: '$9.99',
-  },
-  {
-    id: 3,
-    date: '2023-03-15',
-    items: ['Cheeseburger', 'Fries', 'Milkshake'],
-    total: '$15.99',
-  },
+// Example data - replace with data fetched from backend
+const currentOrdersData = [
+  // Add your current orders JSON structure here
 ];
 
+const orderHistoryData = [
+  // Add your order history data here
+];
+
+const getOrderStatus = (order) => {
+  if (order.isPickedUp) {
+    return 'In Delivery';
+  } else if (order.isAccepted) {
+    return 'Accepted by Driver';
+  } else if (order.isCooked) {
+    return 'Awaiting Driver';
+  } else if (order.isPaid) {
+    return 'Awaiting Restaurant';
+  } else if (order.isRefused || order.isCancelled) {
+    return 'Cancelled';
+  } else if (order.isAcquitted) {
+    return 'Delivered';
+  }
+  return 'Unknown';
+};
+
 const Orders = () => {
-  const [orderHistory] = useState(OrderHistoryData);
+  const [currentOrders] = useState(currentOrdersData);
+  const [orderHistory] = useState(orderHistoryData);
 
   return (
     <Container maxWidth="md">
-      {/* mettre une condition pour afficher les current uniquement seulement si il y'en a */}
-      <Typography variant='h5'>Current</Typography>
-      
+      {currentOrders.length > 0 && (
+        <>
+          <Typography variant='h5'>Current Orders</Typography>
+          <Box sx={{ my: 4 }}>
+            <List>
+              {currentOrders.map((order) => (
+                <React.Fragment key={order.id}>
+                  <ListItem>
+                    <ListItemText
+                      primary={`Order #${order.id}`}
+                      secondary={`Status: ${getOrderStatus(order)}`}
+                    />
+                    <Chip label={getOrderStatus(order)} color="primary" />
+                  </ListItem>
+                  <Divider component="li" />
+                </React.Fragment>
+              ))}
+            </List>
+          </Box>
+        </>
+      )}
+
+      <Typography variant='h5'>Order History</Typography>
       <Box sx={{ my: 4 }}>
         <List>
           {orderHistory.map((order) => (
@@ -37,7 +72,7 @@ const Orders = () => {
               <ListItem>
                 <ListItemText
                   primary={`Order #${order.id} - ${order.date}`}
-                  secondary={`Items: ${order.items.join(', ')} | Total: ${order.total}`}
+                  secondary={`Items: ${order.items.join(', ')} | Total: ${order.total} | Status: ${getOrderStatus(order)}`}
                 />
               </ListItem>
               <Divider component="li" />
