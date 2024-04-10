@@ -27,6 +27,9 @@ const Orders = () => {
 
   return (
     <Container maxWidth="md">
+      {/* mettre une condition pour afficher les current uniquement seulement si il y'en a */}
+      <Typography variant='h5'>Current</Typography>
+      
       <Box sx={{ my: 4 }}>
         <List>
           {orderHistory.map((order) => (

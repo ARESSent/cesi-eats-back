@@ -101,7 +101,7 @@ const Browse = () => {
           }}
         />
       </Grid>
-      <Grid item display='flex' justifyContent='center'>
+      <Grid item pb={1} display='flex' justifyContent='center'>
         <Button variant='outlined' onClick={() => navigate("/restaurants")}>
           <Typography variant='body1'>
             Explore Restaurants
