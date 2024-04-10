@@ -1,4 +1,3 @@
-import { AdbRounded, Delete, Work } from "@mui/icons-material";
 import axios from "axios"
 
 export const api = 
@@ -205,15 +204,12 @@ export const api =
           throw error; 
         }
     },
-    getCatResto: async (token, catname) => 
+    getCatResto: async ( catname) => 
     {
         let port = "3003";
         let path = "/article/cat/"+catname;
         try {
           const response = await axios.get(`${api.baseURL}${port}${path}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
           });
     
           if (response.status === 200) { 

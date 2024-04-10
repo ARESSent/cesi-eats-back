@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import api from './components/api';
 import {Grid, List, Box, Typography } from '@mui/material';
-
 import resto from './images/restaurants/resto.png';
 import emptylist from './images/restaurants/emptylist.png';
 
@@ -18,11 +17,8 @@ const Browsebycat = () => {
 
     useEffect(() => {
         const fetchCatResto = async () => {
-            const token = localStorage.getItem('token'); 
-            if (!token) return;
-
             try {
-                const restoData = await api.getCatResto(token, category); 
+                const restoData = await api.getCatResto(category); 
                 setRestaurants(restoData);
             } catch (error) {
                 console.error('Error fetching restaurant data:', error);
@@ -31,10 +27,6 @@ const Browsebycat = () => {
 
         fetchCatResto();
     }, [category]); 
-
-    if (restaurants.length === 0) {
-        
-    }
 
     return (
         <Grid container pt={2} direction="column" spacing={2}>
@@ -124,10 +116,10 @@ const Browsebycat = () => {
                     />    
                 </Box>
                 <Typography variant="subtitle1" pl={12} sx={{ color: 'text.secondary' }}>
-                    No restaurants found in this category !
+                    No restaurant found in this category !
                 </Typography>
                 <Typography variant="subtitle1" pl={12} sx={{ color: 'text.secondary' }}>
-                   Nothing to eat there in this category !!!
+                   Nothing to eat there in this category !
                 </Typography>
                 </>
             )}

@@ -17,6 +17,8 @@ import categoryPizza from './images/categories/categoryPizza.png'
 import categorySpanish from './images/categories/categorySpanish.png'
 import categoryProvencal from './images/categories/categoryProvencal.png'
 import categoryOriental from './images/categories/categoryOriental.png'
+import emptylist from './images/restaurants/emptylist.png';
+
 
 
 const Browse = () => {
@@ -108,6 +110,8 @@ const Browse = () => {
           </Typography>
         </Button>
       </Grid>
+      {listItems.length > 0 ? (
+        <>
       <Box display='flex' flexDirection='row' width='430px' >
       <Box paddingLeft={1} sx={{
         display: 'flex',
@@ -233,7 +237,30 @@ const Browse = () => {
         ))}
       </Box>
       </Box>
-
+      </>
+    ) : (
+      <>
+      <Box display="flex" justifyContent="center" pl={2} pt={6} pb={6}>
+          <img 
+              src={emptylist} 
+              alt={emptylist} 
+              sx={{
+                  width: "100%",
+                  height: 'auto',
+                  display: 'block',
+                  borderRadius: '10px',
+                  transition: 'transform 0.5s ease',
+                  '&:hover': {
+                  transform: 'scale(1.1)',
+                  }
+              }}
+          />    
+      </Box>
+      <Typography variant="subtitle1" pl={18} sx={{ color: 'text.secondary' }}>
+          No category found !
+      </Typography>
+      </>
+  )}
     </Grid>
   );
 };
