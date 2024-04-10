@@ -5,10 +5,12 @@ import {
   Route,
   useLocation 
 } from "react-router-dom";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./App.css"
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Browse from "./Browse";
+import Browsebycat from "./Browsebycat";
 import Cart from "./Cart"; 
 import Profile from "./Profile";
 import Signin from "./SignIn";
@@ -27,6 +29,7 @@ const HeaderDynamic = () => {
   const titleMap = { // path in lowercase
     '/': 'Browse',
     '/browse': 'Browse',
+    '/browsebycat': 'Restaurants',
     '/cart': 'Cart',
     '/profile': 'Account Informations',  
     '/signin': 'Create Account',
@@ -44,8 +47,19 @@ const HeaderDynamic = () => {
   return <Header title={title} />;
 };
 
+
+const theme = createTheme({
+  typography: {
+    fontFamily: '"UberMoveMedium", Arial, sans-serif',
+    h4: {
+      fontFamily: '"UberMoveBold", Arial, sans-serif'
+    },
+  },
+});
+
 function App() {
   return (
+    <ThemeProvider theme={theme}>
       <Router>
         <HeaderDynamic />
         <main>
@@ -64,10 +78,12 @@ function App() {
               <Route path="/Account" element={<Account />} />
               <Route path="/Restaurants" element={<Restaurants />} />
               <Route path="/Checkout" element={<Checkout />} />
+              <Route path="/Browsebycat" element={<Browsebycat />} />
           </Routes>
         </main>
         <Footer />
       </Router>
+      </ThemeProvider >
   );
 }
 

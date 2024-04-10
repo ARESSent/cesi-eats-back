@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Grid, List, Box, ListItem, Select, MenuItem, InputLabel, FormControl, Button, Typography } from '@mui/material';
+import { TextField, Grid, List, Box, Button, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +23,7 @@ const Browse = () => {
 
   const [searchText, setSearchText] = useState('');
   const [listItems, setListItems] = useState([]);
-  const [category, setCategory] = useState('all');
+  const [category] = useState('all');
 
   const categories = [
     {id: 1, name: 'All', pictures: categoryAll},
@@ -54,6 +54,10 @@ const Browse = () => {
 
   const navigate = useNavigate();
 
+  const handleCategoryClick = (categoryName) => {
+    navigate("/Browsebycat?category="+categoryName);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -62,23 +66,6 @@ const Browse = () => {
 
   return (
     <Grid container pt={2} direction="column" spacing={2}>
-      {/* <Grid item>
-        <FormControl fullWidth>
-          <InputLabel>Category</InputLabel>
-          <Select
-            value={category}
-            label="Category"
-            onChange={(e) => {
-              setCategory(e.target.value);
-              fetchData(searchText, e.target.value);
-            }}
-          >
-            {categories.map((cat) => (
-              <MenuItem key={cat} value={cat}>{cat}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid> */}
       <Grid item>
         <TextField
           fullWidth
@@ -134,6 +121,7 @@ const Browse = () => {
         {listItems.map((item, index) => (
           index % 2 === 0 && (
             <List 
+              onClick={() => handleCategoryClick(item.name)}
               key={item.id}
               sx={{
                 height: '100px',
@@ -195,6 +183,7 @@ const Browse = () => {
         {listItems.map((item, index) => (
           index % 2 === 1 && (
             <List 
+              onClick={() => handleCategoryClick(item.name)}
               key={item.id}
               sx={{
                 height: '100px',

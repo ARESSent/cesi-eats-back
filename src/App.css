@@ -50,3 +50,19 @@ header h4
     stroke-width: 1.2px;
     fill-opacity: 0;
 }
+
+
+@font-face {
+font-family: 'UberMoveMedium';
+src: url('./font/UberMoveMedium.otf') format('opentype');
+font-weight: normal;
+font-style: normal;
+}
+  
+
+@font-face {
+font-family: 'UberMoveBold';
+src: url('./font/UberMoveBold.otf') format('opentype');
+font-weight: bold;
+font-style: normal;
+}

@@ -7,7 +7,7 @@ const Checkout = () => {
 
   return (
     <>
-    CHIBRAX ULTIME
+    after cart ULTIME
     </>
   );
 };
