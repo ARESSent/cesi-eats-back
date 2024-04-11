@@ -24,21 +24,20 @@ const RestaurantDetail = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const query = useQuery();
   const restaurant = query.get("restaurant");
-
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRestaurantDetails = async () => {
       try {
         const data = await api.getRestodetails(restaurant);
-        setRestaurantMenus(data); 
+        setRestaurantMenus(data);
       } catch (error) {
         console.error('Error fetching restaurant details:', error);
       }
     };
 
     fetchRestaurantDetails();
-  }, []);
+  }, [restaurant]);
 
   const handleCheckboxChange = (itemId, isChecked) => {
     setSelectedItems((prevSelectedItems) => ({
@@ -53,20 +52,23 @@ const RestaurantDetail = () => {
       .map(([itemId, _]) => itemId);
 
     api.putAddCart(localStorage.getItem('token'), selectedIds)
-    api.putAddCart(localStorage.getItem('token'), selectedIds)
     .then(() => {
-      navigate('/cart');  
+      navigate('/cart');
     })
     .catch(error => {
       console.error('Failed to submit order:', error);
     });
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // Navigates back to the previous page
+  };
 
-  const isAnyItemSelected = Object.values(selectedItems).some((isSelected) => isSelected);
+  const isAnyItemSelected = Object.values(selectedItems).some(isSelected => isSelected);
 
   return (
     <>
+      <Button onClick={handleGoBack} sx={{ mt: 2, mb: 2 }}>Go Back</Button>
       <Typography variant="h4" gutterBottom>Restaurant Menus and Articles</Typography>
       {restaurantMenus.map((menu) => (
         <Accordion key={menu.id} sx={{ marginBottom: '10px', boxShadow: '3px 3px 10px rgba(0,0,0,0.2)' }}>
@@ -92,7 +94,7 @@ const RestaurantDetail = () => {
       {isAnyItemSelected && (
         <Box sx={{ position: 'fixed', bottom: 100, right: 20 }}>
           <Button variant="contained" color="primary" onClick={handleSubmitOrder}>
-            Go to cart
+            Go to Cart
           </Button>
         </Box>
       )}
