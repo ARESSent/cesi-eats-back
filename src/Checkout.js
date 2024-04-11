@@ -86,7 +86,7 @@ const Checkout = () => {
           fullWidth
           sx={{ mt: 3 }}
         >
-          Update Card
+          Pay
         </Button>
       </form>
     </Box>

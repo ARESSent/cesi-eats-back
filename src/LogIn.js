@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, TextField, Button, Container } from '@mui/material';
 import api from './components/api.js';
+import logo from './images/cesi_eats_BLUEBG2.png';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,14 +16,28 @@ const Login = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Box
+      <Box pt={2}
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <img 
+            src={logo} 
+            alt={logo} 
+            sx={{
+                width: "100%",
+                height: 'auto',
+                display: 'block',
+                transition: 'transform 0.5s ease',
+                '&:hover': {
+                transform: 'scale(1.1)',
+                }
+            }}
+        />    
+
+        <Box component="form" pt={4} noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -50,7 +66,7 @@ const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 6, mb: 2 }}
           >
             Log In
           </Button>
