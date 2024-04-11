@@ -5,6 +5,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import api from './components/api';
 import emptylist from './images/restaurants/emptylist.png';
 import resto from './images/restaurants/resto.png';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -14,6 +16,7 @@ const Restaurants = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCatResto = async () => {
@@ -21,6 +24,7 @@ const Restaurants = () => {
         const restoData = await api.getCatResto("All");
         setRestaurants(restoData);
         setFilteredRestaurants(restoData); 
+        console.log(restoData)
       } catch (error) {
         console.error('Error fetching restaurant data:', error);
       }
@@ -28,6 +32,7 @@ const Restaurants = () => {
 
     fetchCatResto();
   }, []);
+
 
   useEffect(() => {
     if (searchText === '') {
@@ -39,12 +44,17 @@ const Restaurants = () => {
       setFilteredRestaurants(filtered);
     }
   }, [searchText, restaurants]);
+
+  const handleRestaurantClick = (restoId) => {
+    navigate("../restaurantdetail?restaurant="+restoId);
+  };
+
   return (
       <Grid container pt={2} direction="column" spacing={2}>
         <Grid item>
         <TextField
           fullWidth
-          label="Categories"
+          label="Recherche"
           variant="outlined"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
@@ -87,6 +97,7 @@ const Restaurants = () => {
                       {filteredRestaurants.map((restaurant, index) => (
                       
                       <List 
+                          onClick={() => handleRestaurantClick(restaurant.id)}
                           key={restaurant.id}
                           sx={{
                               height: '100px',
