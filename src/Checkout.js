@@ -1,33 +1,38 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Grid, Typography } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useNavigate } from 'react-router-dom';
-import ToggleButton from '@mui/material/ToggleButton';
+import api from './components/api';  
+import { useLocation } from 'react-router-dom';
+
+
+
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 
 const Checkout = () => {
   const [cardName, setCardName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
+  const [expirationDate, setExpiryDate] = useState('');
   const navigate = useNavigate();
   const [cvc, setCvc] = useState('');
-  const [selectedAddress, setSelectedAddress] = useState('Home');
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    // submit to backend API
+    api.postpay(localStorage.getItem('token'), order, cardNumber, expirationDate, cvc)
   };
   
   const handleGoBack = () => {
-    navigate(-1); // Navigates back to the previous page
+    navigate(-1); 
   };
 
-  const handleAddressChange = (event, newAddress) => {
-    if (newAddress !== null) { // Prevents unselecting the last option
-      setSelectedAddress(newAddress);
-    }
-  };
+  const query = useQuery();
+
+  const order = query.get("order");  
+
   
   return (
     <Box pl={3} pr={3} sx={{ maxWidth: 400, margin: 'auto' }}>
@@ -63,7 +68,7 @@ const Checkout = () => {
               fullWidth
               margin="normal"
               required
-              value={expiryDate}
+              value={expirationDate}
               onChange={(e) => setExpiryDate(e.target.value)}
             />
           </Grid>
@@ -79,19 +84,6 @@ const Checkout = () => {
             />
           </Grid>
         </Grid>
-        <Box pt={2}>
-          <Typography variant='h6' pb={1}>Choose your address</Typography>
-          <ToggleButtonGroup
-            color="primary"
-            value={selectedAddress}
-            exclusive
-            onChange={handleAddressChange}
-            aria-label="Address"
-          >
-            <ToggleButton value="Work">Work</ToggleButton>
-            <ToggleButton value="Home">Home</ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
         <Button
           type="submit"
           variant="contained"

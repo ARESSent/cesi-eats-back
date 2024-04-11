@@ -373,6 +373,99 @@ export const api =
           }
           throw error; 
         }
+    },
+    getArticle : async ( articleID) => 
+    {
+        let port = "3003";
+        let path = "/article/"+articleID;
+        try {
+          const response = await axios.get(`${api.baseURL}${port}${path}`, {
+          });
+    
+          if (response.status === 200) { 
+            return response.data;
+          } else {
+            throw new Error(`Error: Received status code ${response.status}`);
+          }
+        } catch (error) {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+          throw error; 
+        }
+    },
+    postaddOrder: async (token, address) => 
+    {
+        let port = "3006";
+        let path= "/order/create";
+        let body = {
+            address:address
+        }
+        var config = {
+            method: 'post',
+            url: api.baseURL+port+path,
+            data: body,
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        }
+
+        return await axios(config).then((response) => {
+            if (response.status === 201) 
+            {
+                window.location.assign(api.baseURL+"4000/checkout?order="+response.id)
+                return "success"
+            } 
+            else 
+            {
+                let err = new Error("Error !!")
+                return err
+            }
+        }).catch((error) => {
+            alert(error)
+        }) 
+    },
+    postpay: async (token, order, cardNumber, expirationDate, cvc) => 
+    {
+        let port = "3006";
+        let path= "/order/checkout";
+        let body = {
+            cardInfo:{
+              orderId:order,
+              cardNumber: cardNumber,
+              expirationDate: expirationDate,
+              cvc:cvc
+            }
+        }
+        var config = {
+            method: 'post',
+            url: api.baseURL+port+path,
+            data: body,
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        }
+
+        return await axios(config).then((response) => {
+            if (response.status === 201) 
+            {
+                window.location.assign(api.baseURL+"4000/orders")
+                return "success"
+            } 
+            else 
+            {
+                let err = new Error("Error !!")
+                return err
+            }
+        }).catch((error) => {
+            alert(error)
+        }) 
     }
 };
 export default api;

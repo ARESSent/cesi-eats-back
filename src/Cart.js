@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Container, List, ListItem, ListItemText, IconButton, Typography } from '@mui/material';
+import { Box, Button, Container, List, ListItem, ListItemText, IconButton, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Link } from 'react-router-dom';
 import api from './components/api';  
 import cart from './images/emptycart.png';
 
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState('Home');
+
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -24,6 +25,11 @@ const Cart = () => {
 
     fetchCartItems();
   }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    api.postaddOrder(localStorage.getItem('token'), selectedAddress)
+  };
 
   const handleRemoveItem = (id) => {
     let carIndex = cartItems.indexOf(id);
@@ -42,6 +48,12 @@ const Cart = () => {
     window.location.reload();
   };
 
+
+  const handleAddressChange = (event, newAddress) => {
+    if (newAddress !== null) { 
+      setSelectedAddress(newAddress);
+    }
+  };
 
   return (
     <Container maxWidth="sm">
@@ -62,8 +74,21 @@ const Cart = () => {
               </ListItem>
             ))}
           </List>
+          <Box pt={2}>
+          <Typography variant='h6' pb={1}>Choose your address</Typography>
+          <ToggleButtonGroup
+            color="primary"
+            value={selectedAddress}
+            exclusive
+            onChange={handleAddressChange}
+            aria-label="Address"
+          >
+            <ToggleButton value="Work">Work</ToggleButton>
+            <ToggleButton value="Home">Home</ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-          <Button variant="contained" color="primary" component={Link} to="/checkout">
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
             Proceed to Checkout
           </Button>
         </Box>
