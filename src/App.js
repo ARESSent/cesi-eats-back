@@ -23,6 +23,7 @@ import Help from "./Help";
 import Account from "./Account";
 import Restaurants from "./Restaurants";
 import Checkout from "./Checkout";
+import RestaurantDetail from "./RestaurantDetail";
 
 const HeaderDynamic = () => {
   const location = useLocation(); 
@@ -41,7 +42,8 @@ const HeaderDynamic = () => {
     '/help': 'Help & Support',
     '/account': 'Profile',
     '/restaurants': 'Restaurants',
-    '/checkout': 'Checkout'
+    '/checkout': 'Checkout',
+    '/restaurantdetail': 'Restaurant Details'
   };
   const title = titleMap[location.pathname.toLowerCase()];
   return <Header title={title} />;
@@ -79,6 +81,7 @@ function App() {
               <Route path="/Restaurants" element={<Restaurants />} />
               <Route path="/Checkout" element={<Checkout />} />
               <Route path="/Browsebycat" element={<Browsebycat />} />
+              <Route path="/RestaurantDetail" element={<RestaurantDetail />} />
           </Routes>
         </main>
         <Footer />
