@@ -9,6 +9,7 @@ import {
   Divider,
   Chip
 } from '@mui/material';
+import api from './components/api';
 
 // Example data - replace with data fetched from backend
 const currentOrdersData = [
@@ -22,18 +23,22 @@ const orderHistoryData = [
 const getOrderStatus = (order) => {
   if (order.isPickedUp) {
     return 'In Delivery';
-  } else if (order.isAccepted) {
+  } 
+  else if (order.isAccepted) {
     return 'Accepted by Driver';
-  } else if (order.isCooked) {
+  } 
+  else if (order.isCooked) {
     return 'Awaiting Driver';
-  } else if (order.isPaid) {
+  } 
+  else if (order.isPaid) {
     return 'Awaiting Restaurant';
-  } else if (order.isRefused || order.isCancelled) {
+  } 
+  else if (order.isRefused || order.isCancelled) {
     return 'Cancelled';
-  } else if (order.isAcquitted) {
+  } 
+  else if (order.isAcquitted) {
     return 'Delivered';
   }
-  return 'Unknown';
 };
 
 const Orders = () => {
