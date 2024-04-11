@@ -30,7 +30,7 @@ const Checkout = () => {
   };
   
   return (
-    <Box sx={{ maxWidth: 400, margin: 'auto' }}>
+    <Box pl={3} pr={3} sx={{ maxWidth: 400, margin: 'auto' }}>
       <Button onClick={handleGoBack} sx={{ mt: 2, mb: 2 }}>Go Back</Button>
       <Grid display='flex' flexDirection='row' >
         <CreditCardIcon color="primary" sx={{ fontSize: 40 }} display='flex' />
