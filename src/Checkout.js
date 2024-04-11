@@ -2,23 +2,36 @@ import React, { useState } from 'react';
 import { Box, TextField, Button, Grid, Typography } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { useNavigate } from 'react-router-dom';
 import ToggleButton from '@mui/material/ToggleButton';
 
 
 const Checkout = () => {
   const [cardName, setCardName] = useState('');
-    const [cardNumber, setCardNumber] = useState('');
-    const [expiryDate, setExpiryDate] = useState('');
-    const [cvc, setCvc] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const navigate = useNavigate();
+  const [cvc, setCvc] = useState('');
+  const [selectedAddress, setSelectedAddress] = useState('Home');
   
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      // submit to backend API
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // submit to backend API
+  };
   
+  const handleGoBack = () => {
+    navigate(-1); // Navigates back to the previous page
+  };
+
+  const handleAddressChange = (event, newAddress) => {
+    if (newAddress !== null) { // Prevents unselecting the last option
+      setSelectedAddress(newAddress);
+    }
+  };
   
   return (
     <Box sx={{ p: 3, maxWidth: 400, margin: 'auto' }}>
+      <Button onClick={handleGoBack} sx={{ mt: 2, mb: 2 }}>Go Back</Button>
       <Grid display='flex' flexDirection='row' >
         <CreditCardIcon color="primary" sx={{ fontSize: 40 }} display='flex' />
         <Typography ml={2} mt='4px' display='flex' variant='h5'>Credit Card</Typography>
@@ -66,19 +79,19 @@ const Checkout = () => {
             />
           </Grid>
         </Grid>
-        <Grid pt={2} display='flex' flexDirection='column'>
-          <Typography variant='h5' pb={1}>Choose your adress</Typography>
+        <Box pt={2}>
+          <Typography variant='h6' pb={1}>Choose your address</Typography>
           <ToggleButtonGroup
             color="primary"
-            // value={home}
-            // onChange={handleChange}
+            value={selectedAddress}
             exclusive
-            aria-label="Platform"
+            onChange={handleAddressChange}
+            aria-label="Address"
           >
             <ToggleButton value="Work">Work</ToggleButton>
             <ToggleButton value="Home">Home</ToggleButton>
           </ToggleButtonGroup>
-        </Grid>
+        </Box>
         <Button
           type="submit"
           variant="contained"
