@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Container, List, ListItem, ListItemText, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
-
-const initialCartItems = [
-  { id: 1, name: 'Burger', quantity: 2, price: 5.99 },
-  { id: 2, name: 'Fries', quantity: 1, price: 2.99 },
-  { id: 3, name: 'Coke', quantity: 3, price: 1.99 },
-];
+import api from './components/api';  
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      const token = localStorage.getItem('token');  
+      if (!token) return;
+
+      try {
+        const items = await api.getCart(token);
+        setCartItems(items.items);
+        console.log(items.items);
+      } catch (error) {
+        console.error('Error fetching cart items:', error);
+      }
+    };
+
+    fetchCartItems();
+  }, []);
 
   const handleRemoveItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  const calculateTotal = () => {
-    return cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2);
+    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+    api.putRemoveCart(localStorage.getItem('token'), cartItems);
   };
 
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Uncle’s Classic Burger
+          Your Cart
         </Typography>
         {cartItems.length > 0 ? (
           <List>
@@ -40,9 +49,6 @@ const Cart = () => {
                 <ListItemText primary={item.name} secondary={`Quantity: ${item.quantity} | Price: $${item.price}`} />
               </ListItem>
             ))}
-            <ListItem>
-              <ListItemText primary="Total" secondary={`$${calculateTotal()}`} />
-            </ListItem>
           </List>
         ) : (
           <Typography>Your cart is empty.</Typography>
