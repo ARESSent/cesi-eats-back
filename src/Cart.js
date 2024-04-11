@@ -3,6 +3,8 @@ import { Box, Button, Container, List, ListItem, ListItemText, IconButton, Typog
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 import api from './components/api';  
+import cart from './images/emptycart.png';
+
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -15,7 +17,6 @@ const Cart = () => {
       try {
         const items = await api.getCart(token);
         setCartItems(items.items);
-        console.log(items.items);
       } catch (error) {
         console.error('Error fetching cart items:', error);
       }
@@ -25,39 +26,70 @@ const Cart = () => {
   }, []);
 
   const handleRemoveItem = (id) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
-    api.putRemoveCart(localStorage.getItem('token'), cartItems);
+    let carIndex = cartItems.indexOf(id);
+    if(carIndex > -1)
+    {
+      cartItems.splice(carIndex, 1)
+    }
+    
+    setCartItems(cartItems); 
+
+    api.putRemoveCart(localStorage.getItem('token'), cartItems)
+    .catch(error => {
+        console.error('Failed to update cart:', error);
+        setCartItems(cartItems); 
+    });
+    window.location.reload();
   };
+
 
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Your Cart
-        </Typography>
         {cartItems.length > 0 ? (
+          <>
           <List>
-            {cartItems.map((item) => (
+            {cartItems.map((item,index) => (
               <ListItem
-                key={item.id}
+                key={item+index}
                 secondaryAction={
-                  <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveItem(item.id)}>
+                  <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveItem(item)}>
                     <DeleteIcon />
                   </IconButton>
                 }
               >
-                <ListItemText primary={item.name} secondary={`Quantity: ${item.quantity} | Price: $${item.price}`} />
+              <ListItemText primary={item} />
               </ListItem>
             ))}
           </List>
-        ) : (
-          <Typography>Your cart is empty.</Typography>
-        )}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
           <Button variant="contained" color="primary" component={Link} to="/checkout">
             Proceed to Checkout
           </Button>
         </Box>
+        </>
+        ) : (
+          <>
+          <Box display="flex" justifyContent="center" pl={2} pb={6}>
+                    <img 
+                        src={cart} 
+                        alt={cart} 
+                        sx={{
+                            width: "100%",
+                            height: 'auto',
+                            display: 'block',
+                            borderRadius: '10px',
+                            transition: 'transform 0.5s ease',
+                            '&:hover': {
+                            transform: 'scale(1.1)',
+                            }
+                        }}
+                    />    
+                </Box>
+          <Typography>Your cart is empty.</Typography>
+          </>
+        )}
+       
       </Box>
     </Container>
   );
