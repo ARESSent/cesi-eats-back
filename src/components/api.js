@@ -284,6 +284,37 @@ export const api =
           }
           throw error; 
         }
+    },
+    putAddCart: async (token, menusandarticle) => 
+    {
+        let port = "3005";
+        let path= "/cart/edit";
+        let body = {
+          Items:menusandarticle
+        }
+        var config = {
+            method: 'put',
+            url: api.baseURL+port+path,
+            data: body,
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        }
+
+        return await axios(config).then((response) => {
+            if (response.status === 201) 
+            {
+                window.location.assign(api.baseURL+"4000/profile")
+                return "success"
+            } 
+            else 
+            {
+                let err = new Error("Error !!")
+                return err
+            }
+        }).catch((error) => {
+            alert(error)
+        }) 
     }
 };
 export default api;

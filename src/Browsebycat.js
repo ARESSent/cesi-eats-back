@@ -4,6 +4,8 @@ import api from './components/api';
 import {Grid, List, Box, Typography } from '@mui/material';
 import resto from './images/restaurants/resto.png';
 import emptylist from './images/restaurants/emptylist.png';
+import { useNavigate } from 'react-router-dom';
+
 
 function useQuery() {
     const { search } = useLocation();
@@ -14,6 +16,9 @@ const Browsebycat = () => {
     const query = useQuery();
     const category = query.get("category");  
     const [restaurants, setRestaurants] = useState([]);
+
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchCatResto = async () => {
@@ -27,6 +32,11 @@ const Browsebycat = () => {
 
         fetchCatResto();
     }, [category]); 
+
+
+    const handleRestaurantClick = (restoId) => {
+        navigate("../restaurantdetail?restaurant="+restoId);
+      };
 
     return (
         <Grid container pt={2} direction="column" spacing={2}>
@@ -48,6 +58,7 @@ const Browsebycat = () => {
                         {restaurants.map((restaurant, index) => (
                         
                         <List 
+                            onClick={() => handleRestaurantClick(restaurant.id)}
                             key={restaurant.id}
                             sx={{
                                 height: '100px',

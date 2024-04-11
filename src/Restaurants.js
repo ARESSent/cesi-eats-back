@@ -8,8 +8,6 @@ import resto from './images/restaurants/resto.png';
 import { useNavigate } from 'react-router-dom';
 
 
-
-
 const Restaurants = () => {
   const [searchText, setSearchText] = useState('');
   const [restaurants, setRestaurants] = useState([]);

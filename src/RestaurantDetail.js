@@ -11,7 +11,7 @@ import {
   Box
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from './components/api';
 
 function useQuery() {
@@ -24,6 +24,8 @@ const RestaurantDetail = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const query = useQuery();
   const restaurant = query.get("restaurant");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRestaurantDetails = async () => {
@@ -46,9 +48,20 @@ const RestaurantDetail = () => {
   };
 
   const handleSubmitOrder = () => {
-    // Add logic to handle the submission of the order
-    console.log('Selected Items for Order:', selectedItems);
+    const selectedIds = Object.entries(selectedItems)
+      .filter(([_, isChecked]) => isChecked)
+      .map(([itemId, _]) => itemId);
+
+    api.putAddCart(localStorage.getItem('token'), selectedIds)
+    api.putAddCart(localStorage.getItem('token'), selectedIds)
+    .then(() => {
+      navigate('/cart');  
+    })
+    .catch(error => {
+      console.error('Failed to submit order:', error);
+    });
   };
+
 
   const isAnyItemSelected = Object.values(selectedItems).some((isSelected) => isSelected);
 
@@ -67,7 +80,7 @@ const RestaurantDetail = () => {
                   <Checkbox
                     checked={!!selectedItems[menu.id]}
                     onChange={(e) => handleCheckboxChange(menu.id, e.target.checked)}
-                    name={menu.name}
+                    name={menu.id}
                   />
                 }
                 label={`${menu.name} - $${menu.price} - ${menu.description}`}
