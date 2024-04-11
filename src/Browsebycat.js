@@ -30,7 +30,11 @@ const Browsebycat = () => {
 
     return (
         <Grid container pt={2} direction="column" spacing={2}>
+            <Typography variant="h4" pt={6} pb={6} display="flex" justifyContent="center" sx={{ color: 'text.secondary' }}>
+                {category}
+            </Typography>
             {restaurants.length > 0 ? (
+                <>
                 <Box display='flex' flexDirection='row' width='430px' >
                     <Box paddingLeft={1} sx={{
                         display: 'flex',
@@ -94,12 +98,10 @@ const Browsebycat = () => {
                         
                     </Box>
                 </Box>
+                </>
             ) : (
                 <>
-                <Typography variant="h4" pt={6} display="flex" justifyContent="center" sx={{ color: 'text.secondary' }}>
-                    {category}
-                </Typography>
-                <Box display="flex" justifyContent="center" pl={2} pt={6} pb={6}>
+                <Box display="flex" justifyContent="center" pl={2} pb={6}>
                     <img 
                         src={emptylist} 
                         alt={emptylist} 
