@@ -302,7 +302,7 @@ export const api =
         }
 
         return await axios(config).then((response) => {
-            if (response.status === 201) 
+            if (response.status === 200) 
             {
                 return "success"
             } 
@@ -419,7 +419,7 @@ export const api =
         return await axios(config).then((response) => {
             if (response.status === 201) 
             {
-                window.location.assign(api.baseURL+"4000/checkout?order="+response.id)
+                window.location.assign(api.baseURL+"4000/checkout?order="+response.data.id)
                 return "success"
             } 
             else 
@@ -436,8 +436,8 @@ export const api =
         let port = "3006";
         let path= "/order/checkout";
         let body = {
+          orderId:order,
             cardInfo:{
-              orderId:order,
               cardNumber: cardNumber,
               expirationDate: expirationDate,
               cvc:cvc
@@ -453,7 +453,7 @@ export const api =
         }
 
         return await axios(config).then((response) => {
-            if (response.status === 201) 
+            if (response.status === 200) 
             {
                 window.location.assign(api.baseURL+"4000/orders")
                 return "success"

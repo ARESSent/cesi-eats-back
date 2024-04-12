@@ -79,9 +79,9 @@ const Orders = () => {
             }}
         />    
     </Box>
-    <Typography variant='h5' pt={2}>Current Orders</Typography>
     </>
       )}
+          <Typography variant='h5' pt={2}>Current Orders</Typography>
       {currentOrders.length > 0 ? (
         <>
           <Box sx={{ my: 2 }}>
