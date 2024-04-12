@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import api from './components/api';
 import {Grid, List, Box, Typography } from '@mui/material';
-import resto from './images/restaurants/resto.png';
+import resto0 from './images/restaurants/resto0.png';
+import resto1 from './images/restaurants/resto1.png';
+import resto2 from './images/restaurants/resto2.png';
+import resto3 from './images/restaurants/resto3.png';
+import resto4 from './images/restaurants/resto4.png';
 import emptylist from './images/restaurants/emptylist.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -77,7 +81,7 @@ const Browsebycat = () => {
                             }}
                             >
                             <img 
-                            src={resto} 
+                            src={resto2} 
                             alt={restaurant.firstname} 
                             sx={{
                                 width: "100%",
