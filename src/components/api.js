@@ -45,7 +45,13 @@ export const api =
             if (response.status === 200) 
             {
                 const token = response.data.token;
+                const userType = response.data.userType;
                 localStorage.setItem('token', token);
+                if (userType === "delivery")
+                {
+                  window.location.assign(api.baseURL+"4000/DeliveryHome")
+                  return "success"
+                }
                 window.location.assign(api.baseURL+"4000");
                 return "success"
             } 

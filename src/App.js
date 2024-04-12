@@ -18,6 +18,7 @@ import Login from "./LogIn";
 import About from "./About";
 import Orders from "./Orders";
 import Wallet from "./Wallet";
+import DeliveryHome from "./DeliveryHome";
 import Settings from "./Settings";
 import Help from "./Help";
 import Account from "./Account";
@@ -43,7 +44,8 @@ const HeaderDynamic = () => {
     '/account': 'Profile',
     '/restaurants': 'Restaurants',
     '/checkout': 'Checkout',
-    '/restaurantdetail': 'Restaurant Details'
+    '/restaurantdetail': 'Restaurant Details',
+    '/DeliveryHome': 'Delivery Home'
   };
   const title = titleMap[location.pathname.toLowerCase()];
   return <Header title={title} />;
@@ -82,6 +84,7 @@ function App() {
               <Route path="/Checkout" element={<Checkout />} />
               <Route path="/Browsebycat" element={<Browsebycat />} />
               <Route path="/RestaurantDetail" element={<RestaurantDetail />} />
+              <Route path="/DeliveryHome" element={<DeliveryHome/>} />
           </Routes>
         </main>
         <Footer />
