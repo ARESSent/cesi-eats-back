@@ -7,7 +7,7 @@ export const api =
         'Content-Type': 'application/json',
     },
     postTestToken: async (token) => {
-        let port = "3001";
+        let port = "8080";
         let path = "/verify-token";
         try {
           const response = await axios.post(`${api.baseURL}${port}${path}`, { token });
@@ -29,7 +29,7 @@ export const api =
       },
     postLogin: async (email, password) => 
     {
-        let port = "3001";
+        let port = "8080";
         let path= "/auth/login";
         let body = {
             email: email,
@@ -72,7 +72,7 @@ export const api =
           {"Street":"N/A","Number":"N/A","PostalCode":"N/A","City":"N/A","Country":"N/A"}
         }
 
-        let port = "3001";
+        let port = "8080";
         let path= "/auth/register";
         let body = {
             firstname:firstname, 
@@ -112,7 +112,7 @@ export const api =
         const dd = String(date.getDate()).padStart(2, '0');
         const yyyy = date.getFullYear();
         userInfo.birthdate = `${mm}/${dd}/${yyyy}`;
-        let port = "3002";
+        let port = "8080";
         let path= "/user/"+userInfo.id;
         let body = {
             firstname:userInfo.firstname, 
@@ -146,7 +146,7 @@ export const api =
     },
     deleteUser: async (token, id) => 
     {
-        let port = "3002";
+        let port = "8080";
         let path= "/user/"+id;
         let body = {
         }
@@ -177,7 +177,7 @@ export const api =
     },
     getProfile: async (token) => 
     {
-        let port = "3002";
+        let port = "8080";
         let path = "/user/profile";
         try {
           const response = await axios.get(`${api.baseURL}${port}${path}`, {
@@ -206,7 +206,7 @@ export const api =
     },
     getCatResto: async ( catname) => 
     {
-        let port = "3003";
+        let port = "8080";
         let path = "/article/cat/"+catname;
         try {
           const response = await axios.get(`${api.baseURL}${port}${path}`, {
@@ -232,7 +232,7 @@ export const api =
     },
     getOrders : async (type, token) => 
     {
-        let port = "3006";
+        let port = "8080";
         let path = "/order/"+type;
         try {
           const response = await axios.get(`${api.baseURL}${port}${path}`, {
@@ -261,7 +261,7 @@ export const api =
     },
     getRestodetails: async ( restaurantId) => 
     {
-        let port = "3003";
+        let port = "8080";
         let path = "/article/restaurant/"+restaurantId;
         try {
           const response = await axios.get(`${api.baseURL}${port}${path}`, {
@@ -287,7 +287,7 @@ export const api =
     },
     putAddCart: async (token, menusandarticle) => 
     {
-        let port = "3005";
+        let port = "8080";
         let path= "/cart/edit";
         let body = {
           Items:menusandarticle
@@ -317,7 +317,7 @@ export const api =
     },
     putRemoveCart: async (token, menusandarticle) => 
     {
-        let port = "3005";
+        let port = "8080";
         let path= "/cart/DeleteItem";
         let body = {
           Items:menusandarticle
@@ -347,7 +347,7 @@ export const api =
     },
     getCart: async (token) => 
     {
-        let port = "3005";
+        let port = "8080";
         let path = "/cart/consult";
         try {
           const response = await axios.get(`${api.baseURL}${port}${path}`, {
@@ -376,7 +376,7 @@ export const api =
     },
     getArticle : async ( articleID) => 
     {
-        let port = "3003";
+        let port = "8080";
         let path = "/article/"+articleID;
         try {
           const response = await axios.get(`${api.baseURL}${port}${path}`, {
@@ -402,7 +402,7 @@ export const api =
     },
     postaddOrder: async (token, address) => 
     {
-        let port = "3006";
+        let port = "8080";
         let path= "/order/create";
         let body = {
             address:address
@@ -433,7 +433,7 @@ export const api =
     },
     postpay: async (token, order, cardNumber, expirationDate, cvc) => 
     {
-        let port = "3006";
+        let port = "8080";
         let path= "/order/checkout";
         let body = {
             cardInfo:{
