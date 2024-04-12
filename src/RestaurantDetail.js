@@ -61,7 +61,7 @@ const RestaurantDetail = () => {
   };
 
   const handleGoBack = () => {
-    navigate(-1); // Navigates back to the previous page
+    navigate(-1); 
   };
 
   const isAnyItemSelected = Object.values(selectedItems).some(isSelected => isSelected);

@@ -111,7 +111,7 @@ const Cart = () => {
                         }}
                     />    
                 </Box>
-          <Typography>Your cart is empty.</Typography>
+          <Typography pl={16}>Your cart is empty.</Typography>
           </>
         )}
        

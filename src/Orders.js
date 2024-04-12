@@ -62,6 +62,7 @@ const Orders = () => {
       {currentOrders.length > 0 && orderHistory.length > 0 ? (
         <></>
       ) : (
+        <>
         <Box display="flex" justifyContent="center" pl={2} pb={6}>
         <img 
             src={emptylist} 
@@ -78,10 +79,11 @@ const Orders = () => {
             }}
         />    
     </Box>
+    <Typography variant='h5' pt={2}>Current Orders</Typography>
+    </>
       )}
       {currentOrders.length > 0 ? (
         <>
-          <Typography variant='h5' pt={2}>Current Orders</Typography>
           <Box sx={{ my: 2 }}>
             <List>
               {currentOrders.map((order) => (
